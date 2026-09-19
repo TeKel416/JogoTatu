@@ -1,19 +1,18 @@
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
-public class MenuManager : MonoBehaviour
+public class PauseManager : MonoBehaviour
 {
-    [Header("Cena do jogo")]
-    [Tooltip("Nome exato da cena a carregar ao clicar em Play (precisa estar em Build Settings)")]
-    public string gameSceneName = "Main";
-
     [Header("Painéis")]
+    public GameObject pausePanel;
     public GameObject optionsPanel;
-    public GameObject creditsPanel;
 
-    [Header("Áudio")]
+    [Header("Cena do menu principal")]
+    public string mainMenuSceneName = "MainMenu";
+
+    [Header("Áudio (mesmos campos do MenuManager)")]
     public AudioMixer audioMixer;
     public Slider musicSlider;
     public Slider sfxSlider;
@@ -23,13 +22,13 @@ public class MenuManager : MonoBehaviour
     private const string MUSIC_PREF_KEY = "MusicVolume";
     private const string SFX_PREF_KEY = "SFXVolume";
 
+    private bool isPaused;
+
     private void Start()
     {
-        // Garante que nenhum painel de sub-menu comece aberto
+        if (pausePanel != null) pausePanel.SetActive(false);
         if (optionsPanel != null) optionsPanel.SetActive(false);
-        if (creditsPanel != null) creditsPanel.SetActive(false);
 
-        // Carrega os volumes salvos (ou 0.75 como padrão na primeira vez)
         float savedMusic = PlayerPrefs.GetFloat(MUSIC_PREF_KEY, 0.75f);
         float savedSfx = PlayerPrefs.GetFloat(SFX_PREF_KEY, 0.75f);
 
@@ -44,46 +43,60 @@ public class MenuManager : MonoBehaviour
             sfxSlider.value = savedSfx;
             sfxSlider.onValueChanged.AddListener(SetSFXVolume);
         }
-
-        SetMusicVolume(savedMusic);
-        SetSFXVolume(savedSfx);
     }
 
-    // Botão Play
-    public void PlayGame()
+    private void Update()
     {
-        SceneManager.LoadScene(gameSceneName);
+        // Esc alterna entre pausado e jogando (mas não fecha se o Options estiver aberto,
+        // pra Esc não pausar "por cima" do painel de opções por engano)
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (optionsPanel != null && optionsPanel.activeSelf)
+            {
+                CloseOptions();
+            }
+            else if (isPaused)
+            {
+                ResumeGame();
+            }
+            else
+            {
+                PauseGame();
+            }
+        }
     }
 
-    // Botão Options
+    public void PauseGame()
+    {
+        isPaused = true;
+        Time.timeScale = 0f;
+        if (pausePanel != null) pausePanel.SetActive(true);
+    }
+
+    public void ResumeGame()
+    {
+        isPaused = false;
+        Time.timeScale = 1f;
+        if (pausePanel != null) pausePanel.SetActive(false);
+    }
+
     public void OpenOptions()
     {
         if (optionsPanel != null) optionsPanel.SetActive(true);
     }
 
-    // Botão Créditos
-    public void OpenCredits()
-    {
-        if (creditsPanel != null) creditsPanel.SetActive(true);
-    }
-
-    // Botão Voltar, usado tanto no OptionsPanel quanto no CreditsPanel
-    public void CloseAllPanels()
+    public void CloseOptions()
     {
         if (optionsPanel != null) optionsPanel.SetActive(false);
-        if (creditsPanel != null) creditsPanel.SetActive(false);
     }
 
-    // Botão Sair
-    public void QuitGame()
+    public void QuitToMainMenu()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+        // Importante: volta o tempo ao normal antes de trocar de cena,
+        // senão o menu principal carrega já congelado
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(mainMenuSceneName);
     }
-
 
     public void SetMusicVolume(float sliderValue)
     {
@@ -97,7 +110,6 @@ public class MenuManager : MonoBehaviour
 
     private void SetGroupVolume(string mixerParam, string prefKey, float sliderValue)
     {
-   
         float dB = sliderValue > 0.0001f ? Mathf.Log10(sliderValue) * 20f : -80f;
 
         if (audioMixer != null)
