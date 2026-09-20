@@ -976,7 +976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b3ee5079f0c2994c81cb2cf1c44e565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuManager
-  gameSceneName: Game
+  gameSceneName: Mechanic Test
   optionsPanel: {fileID: 1742656892}
   creditsPanel: {fileID: 1166569596}
   audioMixer: {fileID: 0}
