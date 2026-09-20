@@ -5,9 +5,10 @@ public class Breakable : MonoBehaviour
     [Header("Resistência")]
     public float vida = 1f;
 
-    private bool foiQuebrado = false; 
+    private bool foiQuebrado = false;
 
     
+
     public void ReceberDano(float dano)
     {
         // Se já foi quebrado, não faz nada
@@ -28,4 +29,6 @@ public class Breakable : MonoBehaviour
         Debug.Log("💥 Objeto quebrado!");
         Destroy(gameObject);
     }
+
+    
 }

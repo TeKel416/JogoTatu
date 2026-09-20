@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
     private bool Isfloor;
 
-    private bool IsStomp;
+    public bool IsStomp;
 
 
 
@@ -39,7 +39,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-
         Isfloor = Physics.Raycast(
            transform.position,
            Vector3.down,
@@ -54,7 +53,7 @@ public class PlayerController : MonoBehaviour
             Jump();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && !Isfloor&& !IsStomp)
+        if (Input.GetKeyDown(KeyCode.Space) && !Isfloor && !IsStomp)
         {
             Stomp();
         }
@@ -86,16 +85,27 @@ public class PlayerController : MonoBehaviour
     void Stomp()
     {
         IsStomp = true;
-        rb.linearVelocity = new Vector3(0f, 0f, 0f);
+        rb.linearVelocity = Vector3.zero;
 
         rb.AddForce(Vector3.down * stompForce, ForceMode.Impulse);
     }
 
     void FinishStomp()
     {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1f);
+
+        foreach (var colisor in hitColliders)
+        {
+            if (colisor.gameObject.CompareTag("Breakable"))
+            {
+                Destroy(colisor.gameObject);
+                rb.linearVelocity = Vector3.zero;
+            }
+        }
+
         IsStomp = false;
 
-        BreakForce();
+        //BreakForce();
     }
 
     void BreakForce()
@@ -103,27 +113,29 @@ public class PlayerController : MonoBehaviour
         Vector3 tamanhoCaixa = new Vector3(1f, 0.3f, 1f);
         Vector3 centroCaixa = transform.position + Vector3.down * 0.5f;
 
-
-
-
         Collider[] objetosAtingidos = Physics.OverlapBox(
-
             centroCaixa,
             tamanhoCaixa * 0.5f,
             Quaternion.identity,
             camadaQuebravel
             );
 
+        Debug.Log(objetosAtingidos.Length);
+
         foreach (Collider colisor in objetosAtingidos)
         {
+            Debug.Log(colisor.gameObject.tag);
+            /*
             Breakable breakableObject = colisor.GetComponent<Breakable>();
 
             if (breakableObject != null)
             {
                 breakableObject.ReceberDano(stompDamage);
             }
-
+            */
         }
+
+       
 
     }
 }
