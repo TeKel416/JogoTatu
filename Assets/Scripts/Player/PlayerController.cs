@@ -100,10 +100,11 @@ public class PlayerController : MonoBehaviour
         {
             if (colisor.gameObject.CompareTag("Breakable"))
             {
+                SoundManager.Instance.PlaySound3D("Break", transform.position);
                 Destroy(colisor.gameObject);
                 rb.linearVelocity = Vector3.zero;
 
-                SoundManager.Instance.PlaySound3D("Break", transform.position);
+               
             }
         }
 

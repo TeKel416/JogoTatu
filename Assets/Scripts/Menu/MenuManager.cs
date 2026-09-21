@@ -53,7 +53,9 @@ public class MenuManager : MonoBehaviour
     public void PlayGame()
     {
         MusicManager.Instance.PlayMusic("Game");
-        SceneManager.LoadScene(gameSceneName);
+
+     
+        SceneManager.LoadScene("Game");
     }
 
     // Botão Options
