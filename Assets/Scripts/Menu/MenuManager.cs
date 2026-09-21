@@ -25,6 +25,8 @@ public class MenuManager : MonoBehaviour
 
     private void Start()
     {
+        MusicManager.Instance.PlayMusic("Game");
+
         // Garante que nenhum painel de sub-menu comece aberto
         if (optionsPanel != null) optionsPanel.SetActive(false);
         if (creditsPanel != null) creditsPanel.SetActive(false);
@@ -52,9 +54,6 @@ public class MenuManager : MonoBehaviour
     // Botão Play
     public void PlayGame()
     {
-        MusicManager.Instance.PlayMusic("Game");
-
-     
         SceneManager.LoadScene("Game");
     }
 

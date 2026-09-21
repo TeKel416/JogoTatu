@@ -44,10 +44,24 @@ public class CountdownTimer : MonoBehaviour
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-
     private void OnTimerEnd()
     {
         Debug.Log("Tempo esgotado!");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    // FUNCAO PLACEHOLDER PRO J1
+    public void PauseTimer()
+    {
+        timerRunning = false;
+        timerText.text = "PARABÉNS! VOCÊ VENCEU!";
+
+        Invoke("GoToMenu", 5f); // FUNCAO PLACEHOLDER PRO J1
+    }
+
+    // FUNCAO PLACEHOLDER PRO J1
+    void GoToMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
