@@ -3,7 +3,7 @@ using TMPro;
 
 public class CountdownTimer : MonoBehaviour
 {
-    [Tooltip("Tempo inicial em segundos. 120 = 2 minutos.")]
+    [Tooltip("Tempo inicial em segundos. 180 = 3 minutos.")]
     public float startTime = 300f;
 
     public TextMeshProUGUI timerText;
