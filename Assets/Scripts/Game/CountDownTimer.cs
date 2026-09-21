@@ -47,6 +47,6 @@ public class CountdownTimer : MonoBehaviour
     private void OnTimerEnd()
     {
         Debug.Log("Tempo esgotado!");
-       
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
