@@ -7,7 +7,7 @@ public struct MusicTrack
     public AudioClip clip;
 }
 
-public class SoundLibrary : MonoBehaviour
+public class MusicLibrary : MonoBehaviour
 {
     public MusicTrack[] tracks;
 

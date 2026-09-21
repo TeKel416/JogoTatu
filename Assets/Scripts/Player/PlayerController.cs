@@ -80,6 +80,8 @@ public class PlayerController : MonoBehaviour
 
 
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+
+        SoundManager.Instance.PlaySound3D("Jump", transform.position);
     }
 
     void Stomp()
@@ -100,6 +102,8 @@ public class PlayerController : MonoBehaviour
             {
                 Destroy(colisor.gameObject);
                 rb.linearVelocity = Vector3.zero;
+
+                SoundManager.Instance.PlaySound3D("Break", transform.position);
             }
         }
 
