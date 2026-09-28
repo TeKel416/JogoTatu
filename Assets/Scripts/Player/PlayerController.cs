@@ -19,7 +19,14 @@ public class PlayerController : MonoBehaviour
     public float stompDamage = 1f;
     public LayerMask camadaQuebravel;
 
+    [Header("Visual da bolinha")]
+    [Tooltip("GameObject com o modelo normal do tatu (visível fora do stomp)")]
+    public GameObject normalModel;
+    [Tooltip("GameObject com o modelo/esfera representando o tatu enrolado (visível durante o stomp)")]
+    public GameObject ballModel;
 
+    [Header("Animator (opcional, para quando tiver animação de verdade)")]
+    public Animator animator;
 
 
 
@@ -34,13 +41,14 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        SetBallVisual(false);
     }
 
 
     void Update()
     {
         Isfloor = Physics.Raycast(
-           transform.position,
+        transform.position,
            Vector3.down,
            floorDistance,
           floorLayer);
@@ -86,10 +94,13 @@ public class PlayerController : MonoBehaviour
 
     void Stomp()
     {
+        Debug.Log("STOMP CHAMADO");
         IsStomp = true;
         rb.linearVelocity = Vector3.zero;
 
         rb.AddForce(Vector3.down * stompForce, ForceMode.Impulse);
+
+        SetBallVisual(true);
     }
 
     void FinishStomp()
@@ -104,13 +115,27 @@ public class PlayerController : MonoBehaviour
                 Destroy(colisor.gameObject);
                 rb.linearVelocity = Vector3.zero;
 
-               
+
             }
         }
 
         IsStomp = false;
 
+        SetBallVisual(false);
+
         //BreakForce();
+    }
+
+    // Troca entre o modelo normal e o modelo de bolinha, e avisa o Animator (se existir)
+    void SetBallVisual(bool isBall)
+    {
+        if (normalModel != null) normalModel.SetActive(!isBall);
+        if (ballModel != null) ballModel.SetActive(isBall);
+
+        if (animator != null)
+        {
+            animator.SetBool("IsBall", isBall);
+        }
     }
 
     void BreakForce()
@@ -140,7 +165,7 @@ public class PlayerController : MonoBehaviour
             */
         }
 
-       
+
 
     }
 }
