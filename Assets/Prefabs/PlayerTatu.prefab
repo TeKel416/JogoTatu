@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -17.4, y: -10.7, z: -0.049}
-  m_LocalScale: {x: 1.9166168, y: 1.8738319, z: 1.8740959}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6572473345636376489}
@@ -155,6 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   velocidade: 5
+  multiplicadorBolinha: 1.5
   jumpForce: 8
   floorDistance: 1
   floorLayer:
@@ -165,6 +166,9 @@ MonoBehaviour:
   camadaQuebravel:
     serializedVersion: 2
     m_Bits: 128
+  normalModel: {fileID: 0}
+  ballModel: {fileID: 0}
+  animator: {fileID: 0}
   IsStomp: 0
 --- !u!1001 &6682397169109727298
 PrefabInstance:

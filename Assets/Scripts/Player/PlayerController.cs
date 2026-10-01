@@ -1,20 +1,20 @@
+
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
     //movimento
     public float velocidade = 5f;
 
+    [Tooltip("Multiplicador de velocidade quando o tatu estiver em forma de bolinha pelo botão F")]
+    public float multiplicadorBolinha = 1.5f;
+
     //pulo
     public float jumpForce = 7f;
-
-    public float floorDistance = 0.6f;
-
+    public float floorDistance = 0.7f;
     public LayerMask floorLayer;
 
     //stomp
-
     public float stompForce = 15f;
     public float stompDamage = 1f;
     public LayerMask camadaQuebravel;
@@ -28,39 +28,45 @@ public class PlayerController : MonoBehaviour
     [Header("Animator (opcional, para quando tiver animação de verdade)")]
     public Animator animator;
 
-
-
     private Rigidbody rb;
-
     private bool Isfloor;
-
     public bool IsStomp;
 
+    private bool isFacingRight = true;
 
+    // Controle do modo bolinha manual (Tecla F)
+    private bool isManualBall = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        SetBallVisual(false);
+        AtualizarVisual();
     }
-
 
     void Update()
     {
         Isfloor = Physics.Raycast(
-        transform.position,
+           transform.position,
            Vector3.down,
            floorDistance,
-          floorLayer);
+           floorLayer);
 
+        // --- ALTERNAR MODO BOLINHA (TECLA F) ---
+        // Só permite ativar/desativar se estiver no chão e não estiver dando stomp
+        if (Input.GetKeyDown(KeyCode.F) && Isfloor && !IsStomp)
+        {
+            isManualBall = !isManualBall;
+            AtualizarVisual();
+        }
 
-        float entradaMovimento = Input.GetAxis("Horizontal");
-
-        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) && Isfloor)
+        // --- PULO (W ou Seta para Cima) ---
+        // Bloqueado se estiver transformado em bolinha
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) && Isfloor && !isManualBall)
         {
             Jump();
         }
 
+        // --- ATAQUE STOMP (Espaço) ---
         if (Input.GetKeyDown(KeyCode.Space) && !Isfloor && !IsStomp)
         {
             Stomp();
@@ -74,33 +80,58 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        // O movimento lateral só trava completamente durante a queda do Stomp
         if (!IsStomp)
         {
             float entradaMovimento = Input.GetAxis("Horizontal");
-            Vector3 novaVelocidade = new Vector3(entradaMovimento * velocidade, rb.linearVelocity.y, 0f);
+
+            // Define qual velocidade usar com base no estado do tatu
+            float velocidadeAtual = velocidade;
+            if (isManualBall)
+            {
+                velocidadeAtual = velocidade * multiplicadorBolinha;
+            }
+
+            Vector3 novaVelocidade = new Vector3(entradaMovimento * velocidadeAtual, rb.linearVelocity.y, 0f);
             rb.linearVelocity = novaVelocidade;
+
+
+
+            if (novaVelocidade.x > 0)
+            {
+                isFacingRight = true;
+            }
+            if (novaVelocidade.x < 0)
+            {
+                isFacingRight = false;
+            }
+
+            if (!isFacingRight) 
+            {
+                transform.localScale = new Vector3(-2, 2, 2);
+            }
+            else
+            {
+                transform.localScale = new Vector3(2, 2, 2);
+            }
+
         }
     }
 
     void Jump()
     {
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-
-
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-
         SoundManager.Instance.PlaySound3D("Jump", transform.position);
     }
 
     void Stomp()
     {
-        Debug.Log("STOMP CHAMADO");
         IsStomp = true;
         rb.linearVelocity = Vector3.zero;
-
         rb.AddForce(Vector3.down * stompForce, ForceMode.Impulse);
 
-        SetBallVisual(true);
+        AtualizarVisual();
     }
 
     void FinishStomp()
@@ -114,27 +145,34 @@ public class PlayerController : MonoBehaviour
                 SoundManager.Instance.PlaySound3D("Break", transform.position);
                 Destroy(colisor.gameObject);
                 rb.linearVelocity = Vector3.zero;
-
-
             }
         }
 
         IsStomp = false;
 
-        SetBallVisual(false);
+        // Reseta o modo bolinha manual caso ele estivesse ativo antes do pulo/stomp
+        isManualBall = false;
 
-        //BreakForce();
+        AtualizarVisual();
     }
 
-    // Troca entre o modelo normal e o modelo de bolinha, e avisa o Animator (se existir)
-    void SetBallVisual(bool isBall)
+    // Gerencia a troca de modelos 3D e variáveis do Animator
+    void AtualizarVisual()
     {
-        if (normalModel != null) normalModel.SetActive(!isBall);
-        if (ballModel != null) ballModel.SetActive(isBall);
+        bool viradoBolinha = IsStomp || isManualBall;
+
+        if (normalModel != null) normalModel.SetActive(!viradoBolinha);
+        if (ballModel != null) ballModel.SetActive(viradoBolinha);
 
         if (animator != null)
         {
-            animator.SetBool("IsBall", isBall);
+            animator.SetBool("IsBall", viradoBolinha);
+            rb.freezeRotation = !viradoBolinha;
+
+            if (!viradoBolinha)
+            {
+                transform.rotation = Quaternion.identity;
+            }
         }
     }
 
@@ -155,17 +193,6 @@ public class PlayerController : MonoBehaviour
         foreach (Collider colisor in objetosAtingidos)
         {
             Debug.Log(colisor.gameObject.tag);
-            /*
-            Breakable breakableObject = colisor.GetComponent<Breakable>();
-
-            if (breakableObject != null)
-            {
-                breakableObject.ReceberDano(stompDamage);
-            }
-            */
         }
-
-
-
     }
 }
