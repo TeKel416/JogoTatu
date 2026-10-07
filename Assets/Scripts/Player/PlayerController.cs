@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -6,8 +5,17 @@ public class PlayerController : MonoBehaviour
     //movimento
     public float velocidade = 5f;
 
-    [Tooltip("Multiplicador de velocidade quando o tatu estiver em forma de bolinha pelo botão F")]
-    public float multiplicadorBolinha = 1.5f;
+    [Header("Configurações do Modo Bola")]
+    [Tooltip("Velocidade máxima que a bolinha alcança (Substituiu o multiplicador para dar mais liberdade de tuning)")]
+    public float velocidadeMaximaBola = 12f;
+    [Tooltip("Quão rápido ela acelera até a velocidade máxima. Valores menores deixam mais pesado/lento para arrancar.")]
+    public float aceleracaoBola = 8f;
+    [Tooltip("Quão difícil é virar pro lado oposto. Valores menores fazem ele 'escorregar' mais metros antes de mudar de direção.")]
+    public float inerciaCurvaBola = 4f;
+
+    [Header("Configurações de Quebra de Parede")]
+    [Tooltip("Velocidade horizontal mínima necessária para conseguir quebrar a parede de lado.")]
+    public float velocidadeMinimaParaQuebrarParede = 10f;
 
     //pulo
     public float jumpForce = 7f;
@@ -37,6 +45,9 @@ public class PlayerController : MonoBehaviour
     // Controle do modo bolinha manual (Tecla F)
     private bool isManualBall = false;
 
+    // Guarda a velocidade do frame anterior porque no frame da colisão a física da Unity pode zerar a velocidade antes do OnCollisionEnter rodar
+    private float velocidadeUltimoFrameX;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -52,7 +63,6 @@ public class PlayerController : MonoBehaviour
            floorLayer);
 
         // --- ALTERNAR MODO BOLINHA (TECLA F) ---
-        // Só permite ativar/desativar se estiver no chão e não estiver dando stomp
         if (Input.GetKeyDown(KeyCode.F) && Isfloor && !IsStomp)
         {
             isManualBall = !isManualBall;
@@ -60,8 +70,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // --- PULO (W ou Seta para Cima) ---
-        // Bloqueado se estiver transformado em bolinha
-        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) && Isfloor && !isManualBall)
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) && Isfloor)
         {
             Jump();
         }
@@ -80,33 +89,51 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        // O movimento lateral só trava completamente durante a queda do Stomp
+        // Salva a velocidade antes de aplicar a física do frame atual
+        velocidadeUltimoFrameX = rb.linearVelocity.x;
+
         if (!IsStomp)
         {
-            float entradaMovimento = Input.GetAxis("Horizontal");
+            float entradaMovimento = Input.GetAxisRaw("Horizontal");
 
-            // Define qual velocidade usar com base no estado do tatu
-            float velocidadeAtual = velocidade;
+            float velocidadeAlvoX = 0f;
+            float taxaMudancaVelocidade = 0f;
+
             if (isManualBall)
             {
-                velocidadeAtual = velocidade * multiplicadorBolinha;
+                velocidadeAlvoX = entradaMovimento * velocidadeMaximaBola;
+
+                bool mudandoDeDirecao = (entradaMovimento != 0 && Mathf.Sign(rb.linearVelocity.x) != Mathf.Sign(entradaMovimento));
+
+                if (mudandoDeDirecao)
+                {
+                    taxaMudancaVelocidade = inerciaCurvaBola;
+                }
+                else
+                {
+                    taxaMudancaVelocidade = aceleracaoBola;
+                }
+            }
+            else
+            {
+                velocidadeAlvoX = entradaMovimento * velocidade;
+                taxaMudancaVelocidade = 100f;
             }
 
-            Vector3 novaVelocidade = new Vector3(entradaMovimento * velocidadeAtual, rb.linearVelocity.y, 0f);
-            rb.linearVelocity = novaVelocidade;
+            float novoX = Mathf.MoveTowards(rb.linearVelocity.x, velocidadeAlvoX, taxaMudancaVelocidade * Time.fixedDeltaTime);
+            rb.linearVelocity = new Vector3(novoX, rb.linearVelocity.y, 0f);
 
-
-
-            if (novaVelocidade.x > 0)
+            // --- LÓGICA DE DIRECIONAMENTO VISUAL ---
+            if (rb.linearVelocity.x > 0.1f)
             {
                 isFacingRight = true;
             }
-            if (novaVelocidade.x < 0)
+            if (rb.linearVelocity.x < -0.1f)
             {
                 isFacingRight = false;
             }
 
-            if (!isFacingRight) 
+            if (!isFacingRight)
             {
                 transform.localScale = new Vector3(-2, 2, 2);
             }
@@ -114,7 +141,27 @@ public class PlayerController : MonoBehaviour
             {
                 transform.localScale = new Vector3(2, 2, 2);
             }
+        }
+    }
 
+    // --- NOVA FUNÇÃO: DETECTAR IMPACTO LATERAL ---
+    void OnCollisionEnter(Collision collision)
+    {
+        // Verifica se o objeto batido tem a tag da parede quebrável
+        if (collision.gameObject.CompareTag("WallBreakable"))
+        {
+            // Pega o valor absoluto da velocidade do frame anterior (ignora se é esquerda ou direita)
+            float impactoHorizontal = Mathf.Abs(velocidadeUltimoFrameX);
+
+            // Se a velocidade do impacto foi maior ou igual ao limite definido
+            if (impactoHorizontal >= velocidadeMinimaParaQuebrarParede)
+            {
+                SoundManager.Instance.PlaySound3D("Break", transform.position);
+                Destroy(collision.gameObject);
+
+                // Mantém um pouco da velocidade para ele não parar estagnado ao quebrar a parede
+                rb.linearVelocity = new Vector3(velocidadeUltimoFrameX * 0.5f, rb.linearVelocity.y, 0f);
+            }
         }
     }
 
@@ -149,14 +196,10 @@ public class PlayerController : MonoBehaviour
         }
 
         IsStomp = false;
-
-        // Reseta o modo bolinha manual caso ele estivesse ativo antes do pulo/stomp
         isManualBall = false;
-
         AtualizarVisual();
     }
 
-    // Gerencia a troca de modelos 3D e variáveis do Animator
     void AtualizarVisual()
     {
         bool viradoBolinha = IsStomp || isManualBall;
@@ -187,8 +230,6 @@ public class PlayerController : MonoBehaviour
             Quaternion.identity,
             camadaQuebravel
             );
-
-        Debug.Log(objetosAtingidos.Length);
 
         foreach (Collider colisor in objetosAtingidos)
         {
