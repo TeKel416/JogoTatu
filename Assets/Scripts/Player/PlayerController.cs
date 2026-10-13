@@ -17,8 +17,14 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Velocidade horizontal mínima necessária para conseguir quebrar a parede de lado.")]
     public float velocidadeMinimaParaQuebrarParede = 10f;
 
+    [Header("Peso no ar")]
+    [Tooltip("Multiplicador de gravidade na subida do pulo")]
+    public float gravidadeSubida = 1.5f;
+    [Tooltip("Multiplicador de gravidade na queda. Maior = cai mais rápido")]
+    public float gravidadeQueda = 2.5f;
+
     //pulo
-    public float jumpForce = 7f;
+    public float jumpForce = 12f;
     public float floorDistance = 0.7f;
     public LayerMask floorLayer;
 
@@ -92,6 +98,10 @@ public class PlayerController : MonoBehaviour
         // Salva a velocidade antes de aplicar a física do frame atual
         velocidadeUltimoFrameX = rb.linearVelocity.x;
 
+        // Gravidade extra: pulo mais seco e queda mais pesada
+        float multiplicador = rb.linearVelocity.y < 0f ? gravidadeQueda : gravidadeSubida;
+        rb.AddForce(Physics.gravity * (multiplicador - 1f), ForceMode.Acceleration);
+
         if (!IsStomp)
         {
             float entradaMovimento = Input.GetAxisRaw("Horizontal");
@@ -144,7 +154,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // --- NOVA FUNÇÃO: DETECTAR IMPACTO LATERAL ---
+    // --- DETECTAR IMPACTO LATERAL ---
     void OnCollisionEnter(Collision collision)
     {
         // Verifica se o objeto batido tem a tag da parede quebrável

@@ -8687,6 +8687,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 438949427}
     - target: {fileID: 2136701020339938630, guid: d36a3ad0dabdce7489c05d34515d2aad, type: 3}
+      propertyPath: jumpForce
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2136701020339938630, guid: d36a3ad0dabdce7489c05d34515d2aad, type: 3}
       propertyPath: normalModel
       value: 
       objectReference: {fileID: 1592408590}
@@ -8741,6 +8745,14 @@ PrefabInstance:
     - target: {fileID: 8657727705843346835, guid: d36a3ad0dabdce7489c05d34515d2aad, type: 3}
       propertyPath: m_Constraints
       value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 8657727705843346835, guid: d36a3ad0dabdce7489c05d34515d2aad, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8657727705843346835, guid: d36a3ad0dabdce7489c05d34515d2aad, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
