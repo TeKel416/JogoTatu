@@ -49,6 +49,7 @@ public class PauseManager : MonoBehaviour
     {
         // Esc alterna entre pausado e jogando (mas não fecha se o Options estiver aberto,
         // pra Esc não pausar "por cima" do painel de opções por engano)
+        if (GameManager.Instance != null && GameManager.Instance.State != GameState.Playing) return;
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (optionsPanel != null && optionsPanel.activeSelf)
