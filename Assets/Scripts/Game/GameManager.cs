@@ -63,6 +63,13 @@ public class GameManager : MonoBehaviour
 
     private void BeginIntro()
     {
+        // A cutscene já foi vista (ex: o personagem morreu e a cena recarregou): vai direto pro jogo
+        if (CutsceneManager.JaTocou)
+        {
+            PularIntro();
+            return;
+        }
+
         State = GameState.Intro;
 
         // Cobre a tela de preto desde o primeiro frame, escondendo o jogo enquanto o vídeo carrega
@@ -80,6 +87,17 @@ public class GameManager : MonoBehaviour
         // Prepara o vídeo primeiro e só dá o Play quando estiver carregado (evita travadas no começo)
         introVideo.prepareCompleted += OnIntroPrepared;
         introVideo.Prepare();
+    }
+
+    // Libera o jogo na hora, sem cutscene e sem fade
+    private void PularIntro()
+    {
+        fade.alpha = 0f;
+        if (videoDisplay != null) videoDisplay.SetActive(false);
+        hud.SetActive(true);
+        player.enabled = true;
+        timer.enabled = true;
+        State = GameState.Playing;
     }
 
     // Chamado automaticamente pelo VideoPlayer quando termina de carregar
