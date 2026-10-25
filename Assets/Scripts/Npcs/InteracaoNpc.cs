@@ -2,41 +2,84 @@ using UnityEngine;
 
 public class InteracaoNPC : MonoBehaviour
 {
-    private bool jogadorEstaPerto = false;
+    [Header("Dados do NPC")]
+    [SerializeField] private string nomeDoNPC = "NPC";
 
-    // Detecta quando o Tatu entra na área do NPC
+    [Tooltip("Rosto do NPC mostrado na caixa de diálogo (opcional).")]
+    [SerializeField] private Sprite retrato;
+
+    [Tooltip("Cada item é uma fala. Aperte a tecla de interação para passar para a próxima.")]
+    [TextArea(2, 5)]
+    [SerializeField] private string[] falas;
+
+    [Header("Interação")]
+    [SerializeField] private KeyCode teclaInteracao = KeyCode.E;
+
+    [Tooltip("Objeto filho do NPC com o 'E' flutuando em cima da cabeça dele.")]
+    [SerializeField] private GameObject iconeInteragir;
+
+    private bool jogadorEstaPerto = false;
+    private bool conversando = false;
+
+    private void Start()
+    {
+        MostrarIcone(false);
+
+        if (DialogueManager.Instance == null)
+        {
+            Debug.LogError("Não existe um DialogueManager na cena. Crie um GameObject com esse script.", this);
+        }
+    }
+
+    // O Tatu entrou na área do NPC (o Collider do NPC precisa estar com 'Is Trigger' marcado)
     private void OnTriggerEnter(Collider other)
     {
-        // Certifique-se de que o seu Tatu tem a Tag "Player" configurada no Inspector
-        if (other.CompareTag("Player"))
-        {
-            jogadorEstaPerto = true;
-            Debug.Log("Pressione E para interagir com o NPC.");
-        }
+        Debug.Log("Entrou na área: " + other.name);
+
+        if (other.GetComponentInParent<PlayerController>() == null) return;
+
+        jogadorEstaPerto = true;
+        MostrarIcone(true);
     }
 
-    // Detecta quando o Tatu sai da área do NPC
+    // O Tatu saiu da área do NPC
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.GetComponentInParent<PlayerController>() == null) return;
+
+        jogadorEstaPerto = false;
+        MostrarIcone(false);
+    }
+
+    private void Update()
+    {
+        if (!jogadorEstaPerto || !Input.GetKeyDown(teclaInteracao)) return;
+
+        DialogueManager dialogo = DialogueManager.Instance;
+
+        if (!dialogo.EmDialogo)
         {
-            jogadorEstaPerto = false;
-            Debug.Log("Saiu de perto do NPC.");
+            // Começa a conversa
+            conversando = true;
+            MostrarIcone(false);
+            dialogo.Iniciar(nomeDoNPC, falas, retrato);
+        }
+        else if (conversando)
+        {
+            // Só o NPC que começou a conversa avança as falas
+            dialogo.ProximaFala();
+
+            // Se a última fala acabou, libera o NPC e mostra o "E" de novo
+            if (!dialogo.EmDialogo)
+            {
+                conversando = false;
+                MostrarIcone(true);
+            }
         }
     }
 
-    void Update()
+    private void MostrarIcone(bool mostrar)
     {
-        // Se o jogador estiver perto E pressionar a tecla E
-        if (jogadorEstaPerto && Input.GetKeyDown(KeyCode.E))
-        {
-            Interagir();
-        }
-    }
-
-    void Interagir()
-    {
-        // Aqui vai acontecer a mágica no futuro (abrir diálogo, dar missão, etc.)
-        Debug.Log("Interagindo com o NPC: Olá, Tatu! Bem-vindo à Vila!");
+        if (iconeInteragir != null) iconeInteragir.SetActive(mostrar);
     }
 }
