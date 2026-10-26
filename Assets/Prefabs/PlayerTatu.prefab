@@ -222,9 +222,9 @@ GameObject:
   - component: {fileID: 5302127435460154609}
   - component: {fileID: 5098636418546857462}
   - component: {fileID: 8657727705843346835}
-  - component: {fileID: 5486893972110392760}
   - component: {fileID: 2136701020339938630}
   - component: {fileID: 3059778174332794627}
+  - component: {fileID: 1718983643919371803}
   m_Layer: 0
   m_Name: PlayerTatu
   m_TagString: Player
@@ -355,20 +355,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 120
   m_CollisionDetection: 1
---- !u!114 &5486893972110392760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4964293930314200571}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e28b1838b75bc2e40a90849417f547c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  vidaMaxima: 3
-  tempoInvencivel: 1.5
 --- !u!114 &2136701020339938630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,8 +372,8 @@ MonoBehaviour:
   aceleracaoBola: 8
   inerciaCurvaBola: 4
   velocidadeMinimaParaQuebrarParede: 10
-  gravidadeSubida: 1.5
-  gravidadeQueda: 2.5
+  gravidadeSubida: 3
+  gravidadeQueda: 3
   jumpForce: 12
   floorDistance: 1
   floorLayer:
@@ -424,6 +410,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1718983643919371803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4964293930314200571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e28b1838b75bc2e40a90849417f547c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  vidaMaxima: 3
+  tempoInvencivel: 1.5
 --- !u!1001 &6682397169109727298
 PrefabInstance:
   m_ObjectHideFlags: 0
