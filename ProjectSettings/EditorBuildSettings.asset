@@ -11,8 +11,14 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Cenas/GameOld.unity
     guid: efeb27ae3f9b8484da397ddb70278bfe
-  - enabled: 1
+  - enabled: 0
     path: Assets/Cenas/Game.unity
     guid: 6009190358fdf1742b765e79b979fb00
+  - enabled: 1
+    path: Assets/Cenas/Lobby.unity
+    guid: 3282a987282400044bdf8156ed1acc0e
+  - enabled: 1
+    path: Assets/Cenas/Mechanic test.unity
+    guid: 22294f2350437fe4faaa3610a2e06b5b
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
