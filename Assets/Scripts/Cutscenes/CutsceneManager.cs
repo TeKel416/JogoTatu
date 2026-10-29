@@ -1,14 +1,18 @@
 using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class CutsceneManager : MonoBehaviour
 {
     [Header("Referências")]
     [SerializeField] private VideoPlayer meuVideoPlayer;
+    [SerializeField] private RawImage canvasImage;
 
     [Header("Configurações de Transição")]
-    [SerializeField] private float tempoDoFade = 1.5f;
+    [SerializeField] private float delayDoFadeAposVideo = 0.1f;
+    [SerializeField] private float tempoDoFadeNoFinal = 1.5f;
     [SerializeField] private string nomeDaProximaCena = ""; // Deixe em branco se for na mesma cena
 
     private bool transicaoIniciada = false;
@@ -50,8 +54,10 @@ public class CutsceneManager : MonoBehaviour
         // Evento padrão da Unity para quando o vídeo acabar sozinho
         meuVideoPlayer.loopPointReached += IniciarTransicaoPeloVideo;
 
+        meuVideoPlayer.Play();
+
         // TRAVA DE SEGURANÇA: Se o vídeo falhar, força o início após o tempo de duração dele
-        Invoke(nameof(ForcarTransicaoSegura), (float)meuVideoPlayer.length);
+        // Invoke(nameof(ForcarTransicaoSegura), (float)meuVideoPlayer.length);
     }
 
     void IniciarTransicaoPeloVideo(VideoPlayer vp)
@@ -59,14 +65,14 @@ public class CutsceneManager : MonoBehaviour
         ExecutarTransicao();
     }
 
-    void ForcarTransicaoSegura()
+    /*void ForcarTransicaoSegura()
     {
         if (!transicaoIniciada)
         {
             Debug.LogWarning("Segurança acionada: O vídeo travou ou não disparou o fim, forçando a transição.");
             ExecutarTransicao();
         }
-    }
+    }*/
 
     void ExecutarTransicao()
     {
@@ -76,10 +82,11 @@ public class CutsceneManager : MonoBehaviour
         // Marca que a cutscene já foi vista, para não tocar de novo se a cena recarregar
         cutsceneJaTocou = true;
 
-        CancelInvoke(nameof(ForcarTransicaoSegura)); // Cancela o timer de segurança se o vídeo funcionou
+        //CancelInvoke(nameof(ForcarTransicaoSegura)); // Cancela o timer de segurança se o vídeo funcionou
 
         // Executa o fade do professor de forma estática
-        GDavini.Fader.FadeIn(0f, tempoDoFade);
+        GDavini.Fader.FadeIn(delayDoFadeAposVideo, tempoDoFadeNoFinal);
+        Invoke(nameof(IrParaOJogo), delayDoFadeAposVideo + tempoDoFadeNoFinal);
     }
 
     // Certifique-se de que ESTA função esteja selecionada no evento 'On End ()' do Fader do seu professor
@@ -93,17 +100,28 @@ public class CutsceneManager : MonoBehaviour
 
         if (!string.IsNullOrEmpty(nomeDaProximaCena))
         {
-            SceneManager.LoadScene(nomeDaProximaCena);
+            LoadNextScene();
         }
         else
         {
-            // Se for na mesma cena, desliga o vídeo e limpa a tela preta
-            if (meuVideoPlayer != null)
-            {
-                meuVideoPlayer.Stop();
-                meuVideoPlayer.gameObject.SetActive(false);
-            }
-            GDavini.Fader.FadeOut(0f, tempoDoFade);
+            DesligarVideo();
+            GDavini.Fader.FadeOut(0f, tempoDoFadeNoFinal);
         }
+    }
+
+    public void DesligarVideo()
+    {
+        // Se for na mesma cena, desliga o vídeo e limpa a tela preta
+        if (meuVideoPlayer != null)
+        {
+            meuVideoPlayer.Stop();
+            meuVideoPlayer.gameObject.SetActive(false);
+            canvasImage.gameObject.SetActive(false);
+        }
+    }
+
+    public void LoadNextScene()
+    {
+        SceneManager.LoadScene(nomeDaProximaCena);
     }
 }
