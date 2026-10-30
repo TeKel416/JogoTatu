@@ -31,6 +31,8 @@ public class PortalCena : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Jogador entrou no portal");
+
         if (!other.CompareTag("Player") || carregando) return;
 
         jogador = other.GetComponentInParent<PlayerController>();
