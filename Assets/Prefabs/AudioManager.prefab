@@ -227,9 +227,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoundLibrary
   soundEffects:
-  - groupID: UI
+  - groupID: UIVolChange
     clips:
-    - {fileID: 8300000, guid: 874c5d237496b244594ad3b96071ad72, type: 3}
+    - {fileID: 8300000, guid: e92d0319dc068d342b09332d39851318, type: 3}
+  - groupID: UIClick
+    clips:
+    - {fileID: 8300000, guid: 9a8afaa7cfb7cb048884b6ed21e40fd7, type: 3}
+  - groupID: IniciarJogo
+    clips:
+    - {fileID: 8300000, guid: 9fcebf5dc49145f4fb92f9f6b5afdb0a, type: 3}
 --- !u!1 &3587274714819558797
 GameObject:
   m_ObjectHideFlags: 0
