@@ -166,8 +166,9 @@ public class PlayerController : MonoBehaviour
             // Se a velocidade do impacto foi maior ou igual ao limite definido
             if (impactoHorizontal >= velocidadeMinimaParaQuebrarParede)
             {
-                SoundManager.Instance.PlaySound3D("Break", transform.position);
+                
                 Destroy(collision.gameObject);
+                SoundManager.Instance.PlaySound3D("Break", transform.position);
 
                 // Mantém um pouco da velocidade para ele não parar estagnado ao quebrar a parede
                 rb.linearVelocity = new Vector3(velocidadeUltimoFrameX * 0.5f, rb.linearVelocity.y, 0f);
@@ -199,8 +200,8 @@ public class PlayerController : MonoBehaviour
         {
             if (colisor.gameObject.CompareTag("Breakable"))
             {
-                SoundManager.Instance.PlaySound3D("Break", transform.position);
                 Destroy(colisor.gameObject);
+                SoundManager.Instance.PlaySound3D("Break", transform.position);
                 rb.linearVelocity = Vector3.zero;
             }
         }

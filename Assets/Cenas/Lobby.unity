@@ -6685,7 +6685,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!328 &1343843107
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -6739,6 +6739,8 @@ MonoBehaviour:
   tempoDoFade: 1.5
   nomeDaProximaCena: 
   teclaPular: 13
+  pararMusicaNaCutscene: 1
+  musicaAposCutscene: Lobby
 --- !u!4 &1343843109
 Transform:
   m_ObjectHideFlags: 0
