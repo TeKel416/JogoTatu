@@ -220,12 +220,14 @@ public class PlayerController : MonoBehaviour
         if (animator != null)
         {
             animator.SetBool("IsBall", viradoBolinha);
-            rb.freezeRotation = !viradoBolinha;
+            
+        }
+        rb.freezeRotation = !viradoBolinha;
 
-            if (!viradoBolinha)
-            {
-                transform.rotation = Quaternion.identity;
-            }
+        if (!viradoBolinha)
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+
         }
     }
 
