@@ -134,6 +134,8 @@ public class CutsceneManager : MonoBehaviour
 
         // Executa o fade do professor de forma estática
         GDavini.Fader.FadeIn(0f, tempoDoFade);
+
+
     }
 
     // Certifique-se de que ESTA função esteja selecionada no evento 'On End ()' do Fader do seu professor
