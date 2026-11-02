@@ -20,5 +20,11 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Cenas/Mechanic test.unity
     guid: 22294f2350437fe4faaa3610a2e06b5b
+  - enabled: 1
+    path: Assets/Cenas/f1 Fase.unity
+    guid: b095d8135bef1d64b9c89fac6d5c0aa1
+  - enabled: 1
+    path: Assets/Cenas/Tutorial fase.unity
+    guid: ff0acf5a38b88154d9e635582486101c
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
