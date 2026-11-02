@@ -225,6 +225,7 @@ GameObject:
   - component: {fileID: 2136701020339938630}
   - component: {fileID: 3059778174332794627}
   - component: {fileID: 1718983643919371803}
+  - component: {fileID: 2288387626418401495}
   m_Layer: 0
   m_Name: PlayerTatu
   m_TagString: Player
@@ -374,8 +375,8 @@ MonoBehaviour:
   velocidadeMinimaParaQuebrarParede: 10
   gravidadeSubida: 3
   gravidadeQueda: 3
-  jumpForce: 12
-  floorDistance: 1
+  jumpForce: 16
+  floorDistance: 2
   floorLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -424,6 +425,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   vidaMaxima: 3
   tempoInvencivel: 1.5
+--- !u!114 &2288387626418401495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4964293930314200571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c45b8fa65ec42047b5e73011f4731be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Persistente
 --- !u!1001 &6682397169109727298
 PrefabInstance:
   m_ObjectHideFlags: 0
