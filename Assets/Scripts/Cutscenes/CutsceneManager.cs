@@ -16,6 +16,12 @@ public class CutsceneManager : MonoBehaviour
     [Tooltip("Tecla para pular a cutscene")]
     [SerializeField] private KeyCode teclaPular = KeyCode.Return;
 
+    [Header("Música")]
+    [Tooltip("Se marcado, a música do menu para quando a cutscene começa")]
+    [SerializeField] private bool pararMusicaNaCutscene = true;
+    [Tooltip("Música que começa quando a cutscene acaba (nome da faixa no MusicManager). Vazio = não toca nada.")]
+    [SerializeField] private string musicaAposCutscene = "Lobby";
+
     private bool transicaoIniciada = false;
     private bool jogoLiberado = false;
 
@@ -52,7 +58,14 @@ public class CutsceneManager : MonoBehaviour
         {
             meuVideoPlayer.Stop();
             meuVideoPlayer.gameObject.SetActive(false);
+            TocarMusicaPosCutscene();
             return;
+        }
+
+        // Para a música do menu enquanto a cutscene toca
+        if (pararMusicaNaCutscene && MusicManager.Instance != null)
+        {
+            MusicManager.Instance.StopMusic(0.5f);
         }
 
         // Cobre a tela de preto já no começo, para o jogo não aparecer enquanto o vídeo carrega
@@ -162,7 +175,16 @@ public class CutsceneManager : MonoBehaviour
 
             // Devolve o controle ao tatu
             TravarJogador(false);
+
+            // Começa a música do Lobby
+            TocarMusicaPosCutscene();
         }
+    }
+
+    private void TocarMusicaPosCutscene()
+    {
+        if (MusicManager.Instance == null || string.IsNullOrEmpty(musicaAposCutscene)) return;
+        MusicManager.Instance.PlayMusic(musicaAposCutscene);
     }
 
     private void TravarJogador(bool travar)

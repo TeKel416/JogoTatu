@@ -3,11 +3,12 @@ using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+[AddComponentMenu("Audio/Menu Manager")]
 public class MenuManager : MonoBehaviour
 {
     [Header("Cena do jogo")]
     [Tooltip("Nome exato da cena a carregar ao clicar em Play (precisa estar em Build Settings)")]
-    public string gameSceneName = "Main";
+    public string gameSceneName = "Lobby";
 
     [Header("Painéis")]
     public GameObject optionsPanel;
@@ -25,13 +26,15 @@ public class MenuManager : MonoBehaviour
 
     private void Start()
     {
-        MusicManager.Instance.PlayMusic("Game");
+        // 🎵 Toca a música tema do Menu automaticamente ao iniciar
+        if (MusicManager.Instance != null)
+        {
+            MusicManager.Instance.PlayMusic("MainMenu");
+        }
 
-        // Garante que nenhum painel de sub-menu comece aberto
         if (optionsPanel != null) optionsPanel.SetActive(false);
         if (creditsPanel != null) creditsPanel.SetActive(false);
 
-        // Carrega os volumes salvos (ou 0.75 como padrão na primeira vez)
         float savedMusic = PlayerPrefs.GetFloat(MUSIC_PREF_KEY, 0.75f);
         float savedSfx = PlayerPrefs.GetFloat(SFX_PREF_KEY, 0.75f);
 
@@ -51,32 +54,39 @@ public class MenuManager : MonoBehaviour
         SetSFXVolume(savedSfx);
     }
 
-    // Botão Play
     public void PlayGame()
     {
-        SceneManager.LoadScene("Game");
+        // Avisa no Console se o nome da cena estiver errado ou fora da Build List
+        if (!Application.CanStreamedLevelBeLoaded(gameSceneName))
+        {
+            Debug.LogError("A cena '" + gameSceneName + "' não foi encontrada. " +
+                           "Confira o nome no Inspector do MenuManager e se ela está em File > Build Profiles > Scene List.", this);
+            return;
+        }
+
+        // Garante que o jogo não fique congelado caso o menu tenha sido aberto de uma pausa
+        Time.timeScale = 1f;
+
+        // Só carrega a cena (a música do Lobby vai ser chamada quando o diálogo acabar!)
+        SceneManager.LoadScene(gameSceneName);
     }
 
-    // Botão Options
     public void OpenOptions()
     {
         if (optionsPanel != null) optionsPanel.SetActive(true);
     }
 
-    // Botão Créditos
     public void OpenCredits()
     {
         if (creditsPanel != null) creditsPanel.SetActive(true);
     }
 
-    // Botão Voltar, usado tanto no OptionsPanel quanto no CreditsPanel
     public void CloseAllPanels()
     {
         if (optionsPanel != null) optionsPanel.SetActive(false);
         if (creditsPanel != null) creditsPanel.SetActive(false);
     }
 
-    // Botão Sair
     public void QuitGame()
     {
 #if UNITY_EDITOR
@@ -85,7 +95,6 @@ public class MenuManager : MonoBehaviour
         Application.Quit();
 #endif
     }
-
 
     public void SetMusicVolume(float sliderValue)
     {
@@ -99,14 +108,11 @@ public class MenuManager : MonoBehaviour
 
     private void SetGroupVolume(string mixerParam, string prefKey, float sliderValue)
     {
-   
         float dB = sliderValue > 0.0001f ? Mathf.Log10(sliderValue) * 20f : -80f;
-
         if (audioMixer != null)
         {
             audioMixer.SetFloat(mixerParam, dB);
         }
-
         PlayerPrefs.SetFloat(prefKey, sliderValue);
     }
 }
