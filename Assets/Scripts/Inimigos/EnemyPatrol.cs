@@ -139,6 +139,8 @@ public class EnemyPatrol : MonoBehaviour
         if (morto) return;
         morto = true;
 
+        SoundManager.Instance.PlaySound2D("MorteInimigo");
+
         rb.linearVelocity = Vector3.zero;
         rb.isKinematic = true;  
         col.enabled = false;    

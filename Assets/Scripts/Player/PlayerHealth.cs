@@ -31,6 +31,7 @@ public class PlayerHealth : MonoBehaviour
         VidaAtual = Mathf.Max(VidaAtual - quantidade, 0);
         invencivelAte = Time.time + tempoInvencivel;
 
+        SoundManager.Instance.PlaySound2D("DanoTatu");
         Debug.Log("Tatu levou dano! Vida: " + VidaAtual + "/" + vidaMaxima);
 
        
@@ -45,6 +46,7 @@ public class PlayerHealth : MonoBehaviour
     void Die()
     {
         EstaMorto = true;
+        SoundManager.Instance.PlaySound2D("MorteTatu");
         Debug.Log("O tatu morreu!");
 
        

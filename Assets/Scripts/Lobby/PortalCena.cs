@@ -33,6 +33,8 @@ public class PortalCena : MonoBehaviour
     {
         Debug.Log("Jogador entrou no portal");
 
+        SoundManager.Instance.PlaySound2D("ColetarLixo");
+
         if (!other.CompareTag("Player") || carregando) return;
 
         jogador = other.GetComponentInParent<PlayerController>();

@@ -2,6 +2,21 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Instance;
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+
     //movimento
     public float velocidade = 5f;
 
@@ -71,6 +86,7 @@ public class PlayerController : MonoBehaviour
         // --- ALTERNAR MODO BOLINHA (TECLA F) ---
         if (Input.GetKeyDown(KeyCode.F) && Isfloor && !IsStomp)
         {
+            SoundManager.Instance.PlaySound2D("BolinhaTatu");
             isManualBall = !isManualBall;
             AtualizarVisual();
         }
@@ -185,6 +201,8 @@ public class PlayerController : MonoBehaviour
 
     void Stomp()
     {
+        SoundManager.Instance.PlaySound2D("Stomp");
+
         IsStomp = true;
         rb.linearVelocity = Vector3.zero;
         rb.AddForce(Vector3.down * stompForce, ForceMode.Impulse);
@@ -208,7 +226,8 @@ public class PlayerController : MonoBehaviour
 
         IsStomp = false;
         isManualBall = false;
-        AtualizarVisual();
+        CancelInvoke("AtualizarVisual");
+        Invoke("AtualizarVisual", 0.1f);
     }
 
     void AtualizarVisual()
@@ -221,15 +240,9 @@ public class PlayerController : MonoBehaviour
         if (animator != null)
         {
             animator.SetBool("IsBall", viradoBolinha);
-            
         }
         rb.freezeRotation = !viradoBolinha;
-
-        if (!viradoBolinha)
-        {
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-
-        }
+        if (!viradoBolinha) transform.rotation = Quaternion.identity;
     }
 
     void BreakForce()

@@ -198,6 +198,7 @@ GameObject:
   - component: {fileID: 3605584773591914533}
   - component: {fileID: 7181316037856530363}
   - component: {fileID: 8494668061844685732}
+  - component: {fileID: 3280476646990603793}
   m_Layer: 0
   m_Name: Vagalume
   m_TagString: Untagged
@@ -245,6 +246,18 @@ MonoBehaviour:
   tempoFade: 0.5
   ligadoAoIniciar: 1
 --- !u!114 &8494668061844685732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8751028214331652221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c45b8fa65ec42047b5e73011f4731be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Persistente
+--- !u!114 &3280476646990603793
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

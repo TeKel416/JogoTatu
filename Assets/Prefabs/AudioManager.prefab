@@ -236,6 +236,30 @@ MonoBehaviour:
   - groupID: IniciarJogo
     clips:
     - {fileID: 8300000, guid: 9fcebf5dc49145f4fb92f9f6b5afdb0a, type: 3}
+  - groupID: Jump
+    clips:
+    - {fileID: 8300000, guid: 8a523f0b2729cdf45a33f00899e156d5, type: 3}
+  - groupID: Break
+    clips:
+    - {fileID: 8300000, guid: 874c5d237496b244594ad3b96071ad72, type: 3}
+  - groupID: ColetarLixo
+    clips:
+    - {fileID: 8300000, guid: 8a38212b4795bfd4a829b89664d87bbe, type: 3}
+  - groupID: BolinhaTatu
+    clips:
+    - {fileID: 8300000, guid: 8928a980eeed2324391af259162102b5, type: 3}
+  - groupID: DanoTatu
+    clips:
+    - {fileID: 8300000, guid: a410b42fae8d0254a95ebade7f8ae6d9, type: 3}
+  - groupID: MorteInimigo
+    clips:
+    - {fileID: 8300000, guid: 06887c4cede517d4d9cfc5ee55c1b575, type: 3}
+  - groupID: MorteTatu
+    clips:
+    - {fileID: 8300000, guid: 369b22391c68b414fb42fb259c98172a, type: 3}
+  - groupID: Stomp
+    clips:
+    - {fileID: 8300000, guid: cfefd3341af0f184185b3ac9db9c269a, type: 3}
 --- !u!1 &3587274714819558797
 GameObject:
   m_ObjectHideFlags: 0
