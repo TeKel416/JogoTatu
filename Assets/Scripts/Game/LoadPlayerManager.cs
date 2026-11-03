@@ -17,7 +17,6 @@ public class LoadPlayerManager : MonoBehaviour
 
     GameObject FindPlayer()
     {
-        Debug.Log("findplayer");
         player = GameObject.Find("PlayerTatu");
         Debug.Log(player);
         return player;
@@ -25,11 +24,15 @@ public class LoadPlayerManager : MonoBehaviour
 
     IEnumerator SpawnPlayer()
     {
-        yield return new WaitForSeconds(0.1f);
+        player.GetComponent<Rigidbody>().isKinematic = true;
+
+        yield return new WaitForSeconds(1f);
 
         player.transform.position = levelSpawn.position;
 
         player.GetComponent<PlayerController>().enabled = true;
         cineCamera.Target.TrackingTarget = player.transform;
+
+        player.GetComponent<Rigidbody>().isKinematic = false;
     }
 }
