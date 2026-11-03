@@ -28,11 +28,15 @@ public class LoadPlayerManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
+        Debug.Log("old player: "+player.transform.position);
         player.transform.position = levelSpawn.position;
+        Debug.Log("new player: " + player.transform.position);
 
         player.GetComponent<PlayerController>().enabled = true;
         cineCamera.Target.TrackingTarget = player.transform;
 
         player.GetComponent<Rigidbody>().isKinematic = false;
+
+        Debug.Log("final player: " + player.transform.position);
     }
 }

@@ -5,6 +5,18 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: Assets/Cenas/Game.unity
+    guid: 6009190358fdf1742b765e79b979fb00
+  - enabled: 0
+    path: Assets/Cenas/GameOld.unity
+    guid: efeb27ae3f9b8484da397ddb70278bfe
+  - enabled: 0
+    path: Assets/Cenas/Mechanic test.unity
+    guid: 22294f2350437fe4faaa3610a2e06b5b
+  - enabled: 0
+    path: Assets/Cenas/M1 Fase.unity
+    guid: 11a7f374acf62904b95f33887a91f6c5
   - enabled: 1
     path: Assets/Cenas/MainMenu.unity
     guid: fdd6d674ff6f63e4e8838d35304d5a68
@@ -32,17 +44,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Cenas/M4 Fase.unity
     guid: bd1bd800e6e90dc429990fa9ef42be52
-  - enabled: 0
-    path: Assets/Cenas/Game.unity
-    guid: 6009190358fdf1742b765e79b979fb00
-  - enabled: 0
-    path: Assets/Cenas/GameOld.unity
-    guid: efeb27ae3f9b8484da397ddb70278bfe
-  - enabled: 0
-    path: Assets/Cenas/Mechanic test.unity
-    guid: 22294f2350437fe4faaa3610a2e06b5b
-  - enabled: 0
-    path: Assets/Cenas/M1 Fase.unity
-    guid: 11a7f374acf62904b95f33887a91f6c5
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
