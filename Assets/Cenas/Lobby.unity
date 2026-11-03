@@ -3272,7 +3272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 793a3d166fc3b734e842c22be59307a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PortalCena
-  nomeDaCena: Game
+  nomeDaCena: Tutorial fase
   tempoDoFade: 1
   exigirTecla: 0
   teclaInteracao: 101
@@ -6685,7 +6685,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!328 &1343843107
 VideoPlayer:
   m_ObjectHideFlags: 0

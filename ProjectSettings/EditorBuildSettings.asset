@@ -32,7 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Cenas/F3 fase.unity
     guid: 61dd14e546d34fa4e8a8ba2e1b51bd22
-  - enabled: 1
+  - enabled: 0
     path: Assets/Cenas/M1 Fase.unity
     guid: 11a7f374acf62904b95f33887a91f6c5
   - enabled: 1
