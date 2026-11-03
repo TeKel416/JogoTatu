@@ -212,10 +212,11 @@ public class PlayerController : MonoBehaviour
 
     void FinishStomp()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1f);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 3f);
 
         foreach (var colisor in hitColliders)
         {
+            Debug.Log(colisor.gameObject.tag);
             if (colisor.gameObject.CompareTag("Breakable"))
             {
                 Destroy(colisor.gameObject);
