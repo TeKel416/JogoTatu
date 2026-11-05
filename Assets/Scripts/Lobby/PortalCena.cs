@@ -64,6 +64,10 @@ public class PortalCena : MonoBehaviour
     private void IniciarTransicao()
     {
         carregando = true; // impede disparar duas vezes
+
+        // ADICIONADO: Avisa o script do Timer para voltar a funcionar e aparecer na próxima fase
+        CountdownTimer.IniciarEAtivarTimer();
+
         StartCoroutine(TransicaoRoutine());
     }
 
