@@ -74,6 +74,7 @@ public class PortalCena : MonoBehaviour
         {
             Rigidbody rb = jogador.GetComponent<Rigidbody>();
             if (rb != null) rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
+            rb.isKinematic = true;
             jogador.enabled = false;
         }
 

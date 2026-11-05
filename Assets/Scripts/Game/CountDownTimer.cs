@@ -47,7 +47,8 @@ public class CountdownTimer : MonoBehaviour
     private void OnTimerEnd()
     {
         Debug.Log("Tempo esgotado!");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene("Lobby");
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     // FUNCAO PLACEHOLDER PRO J1

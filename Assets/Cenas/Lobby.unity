@@ -5549,11 +5549,16 @@ MonoBehaviour:
   nomeDoNPC: "Saru\xEA Sivirino"
   retrato: {fileID: 21300000, guid: 94b20ff67c792bc4294bdb650f762c75, type: 3}
   falas:
-  - "Eai z\xE9."
-  - "Acerta os inimigos pulando bem forte em cima deles, e cuidado pois o tempo \xE9
-    precioso"
-  - "Mas j\xE1 falei demais, vou ir beber, se quiser fazer algo, entra no po\xE7o
-    ali Z\xE9"
+  - "Opa Fi,c\xEA t\xE1 b\xE3o? fiquei sabendo que oc\xEA vai dar uma ajuda aqui
+    em Ubiracicaba  "
+  - "O caos que assombra a gente est\xE1 dentro daquele po\xE7o. E falando nisso,
+    l\xE1 embaixo pode ter coisas \xFAteis para arrumar minha roda d` \xE1gua, al\xE9m
+    de ajudar no fluxo de \xE1gua. O meu bar e o pessoal precisa funcionar, e pra
+    isso , tenho que ter \xE1gua, se conseguir algo l\xE1  me avisa"
+  - "Uma coisa, l\xE1 embaixo t\xE1 cheio de outros animais bem agressivos, pelo
+    visto a intoxica\xE7\xE3o do ambiente deixou eles meio tant\xE3 da cabe\xE7a.
+    A dica que te dou \xE9 usar essa sua carapa\xE7a para causar dano, mesmo que
+    estejam sempre voltando..."
   teclaInteracao: 101
   iconeInteragir: {fileID: 0}
 --- !u!136 &1135302419
@@ -8488,10 +8493,15 @@ MonoBehaviour:
   retrato: {fileID: 21300000, guid: a29805e28ed59ed48a11f0084b33842a, type: 3}
   falas:
   - "OOOOOH trem b\xE3o"
-  - "Voc\xEA sabia que ao Apertar W ou seta voc\xEA pula,e o espa\xE7o da um Stomp
-    que \xE9 uma esmagada t\xE3o forte que quebra at\xE9 o ch\xE3o! "
-  - "Alem do F fazer virar uma bolinha que acertando paredes de madeira em alta velocidade
-    faz elas quebrar\n "
+  - "\xD4 Bichinha, chega mais. O  seu Z\xE9 me disse para ficar de olho no port\xE3o,
+    mas me surgiu um problema. Diz uma coisa pra mim, Que Diabeisso que aconteceu
+    agora a pouco? Aquela era a Mata? A Lenda? "
+  - "Bem, j\xE1 que \xE9 voc\xEA a pessoa direcionada a tal trabalho, eu tenho um
+    pedido, ao descer no po\xE7o, procure algumas coisas para me auxiliar a arrumar
+    as casas do pessoal, afinal, al\xE9m de seguran\xE7a eu sou a respons\xE1vel
+    nas constru\xE7\xF5es aqui. Eu mesma desceria l\xE1, mas o pessoal aqui precisa
+    da minha supervis\xE3o..."
+  - "O po\xE7o est\xE1 \xE0 direita do Vilarejo, o Sivirino fica bem ao lado dele."
   teclaInteracao: 101
   iconeInteragir: {fileID: 1429466467}
 --- !u!136 &1707130624

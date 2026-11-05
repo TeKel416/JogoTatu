@@ -243,7 +243,7 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("IsBall", viradoBolinha);
         }
         rb.freezeRotation = !viradoBolinha;
-        if (!viradoBolinha) transform.rotation = Quaternion.identity;
+        if (!viradoBolinha) rb.rotation = Quaternion.Euler(Vector3.zero);
     }
 
     void BreakForce()

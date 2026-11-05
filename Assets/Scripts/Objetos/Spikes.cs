@@ -7,6 +7,7 @@ public class Spikes : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            Destroy(collision.gameObject);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }

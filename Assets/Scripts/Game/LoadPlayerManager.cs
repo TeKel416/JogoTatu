@@ -8,10 +8,9 @@ public class LoadPlayerManager : MonoBehaviour
     public CinemachineCamera cineCamera;
     private GameObject player;
     
-    void Start()
+    void Awake()
     {
         player = FindPlayer();
-
         if (player) StartCoroutine(SpawnPlayer());
     }
 
@@ -24,18 +23,20 @@ public class LoadPlayerManager : MonoBehaviour
 
     IEnumerator SpawnPlayer()
     {
-        player.GetComponent<Rigidbody>().isKinematic = true;
+        yield return null;
 
-        yield return new WaitForSeconds(1f);
-
-        Debug.Log("old player: "+player.transform.position);
+        Debug.Log("old player: " + player.transform.position);
         player.transform.position = levelSpawn.position;
         Debug.Log("new player: " + player.transform.position);
 
-        player.GetComponent<PlayerController>().enabled = true;
-        cineCamera.Target.TrackingTarget = player.transform;
+        yield return null;
 
+        cineCamera.Target.TrackingTarget = player.transform.Find("TrackingTarget");
         player.GetComponent<Rigidbody>().isKinematic = false;
+
+        yield return null;
+
+        player.GetComponent<PlayerController>().enabled = true;
 
         Debug.Log("final player: " + player.transform.position);
     }
