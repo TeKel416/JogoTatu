@@ -3131,7 +3131,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2136701020339938630, guid: d36a3ad0dabdce7489c05d34515d2aad, type: 3}
       propertyPath: jumpForce
-      value: 18
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 2136701020339938630, guid: d36a3ad0dabdce7489c05d34515d2aad, type: 3}
       propertyPath: floorDistance

@@ -5806,7 +5806,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteracaoNPC
   nomeDoNPC: Sr Jose Batista
-  retrato: {fileID: 21300000, guid: 80ac3d712f3b1b84182f130f9e5b12f4, type: 3}
+  retrato: {fileID: 21300000, guid: e974f0c2cb1e061429f0a1c2d97a277e, type: 3}
   falas:
   - "Impressionante! Em anos de vida, \xE9 a primeira vez que eu vejo uma manifesta\xE7\xE3o
     da Mata!\r\n"
@@ -5983,8 +5983,8 @@ Transform:
   m_GameObject: {fileID: 1098790513}
   serializedVersion: 2
   m_LocalRotation: {x: -0.0031700942, y: -0.0031694316, z: 0.7070258, w: 0.7071735}
-  m_LocalPosition: {x: 2.432, y: 8, z: 0.26}
-  m_LocalScale: {x: 14.984624, y: 0.033334475, z: 1}
+  m_LocalPosition: {x: 2.43202, y: 11.0344, z: 0.26}
+  m_LocalScale: {x: 21.053246, y: 0.033334475, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1678073916}
@@ -6215,7 +6215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteracaoNPC
   nomeDoNPC: "Saru\xEA Sivirino"
-  retrato: {fileID: 21300000, guid: 94b20ff67c792bc4294bdb650f762c75, type: 3}
+  retrato: {fileID: 21300000, guid: 5449ebe001e53f8408a62d3306e2d570, type: 3}
   falas:
   - "Opa Fi,c\xEA t\xE1 b\xE3o? fiquei sabendo que oc\xEA vai dar uma ajuda aqui
     em Ubiracicaba  "
@@ -9234,7 +9234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteracaoNPC
   nomeDoNPC: Coruja Teresinha
-  retrato: {fileID: 21300000, guid: a29805e28ed59ed48a11f0084b33842a, type: 3}
+  retrato: {fileID: 21300000, guid: da96605bffd6bd646953589dec7a218d, type: 3}
   falas:
   - "OOOOOH trem b\xE3o"
   - "\xD4 Bichinha, chega mais. O  seu Z\xE9 me disse para ficar de olho no port\xE3o,
