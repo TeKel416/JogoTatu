@@ -344,7 +344,7 @@ Transform:
   m_GameObject: {fileID: 338934281}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 28.056946, y: 0.0904541, z: 0}
+  m_LocalPosition: {x: 26.9, y: 0.0904541, z: 0}
   m_LocalScale: {x: 2.4395297, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2128,7 +2128,7 @@ Transform:
   m_GameObject: {fileID: 1322513830}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 33.2, y: 2.370453, z: 0}
+  m_LocalPosition: {x: 32.6, y: 2.370453, z: 0}
   m_LocalScale: {x: 2.4395297, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3139,6 +3139,59 @@ MonoBehaviour:
   materialGrama: {fileID: 0}
   limiarGrama: 0.6
   irregularidadeGrama: 0.5
+--- !u!1 &1639826627
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1639826629}
+  - component: {fileID: 1639826628}
+  m_Layer: 0
+  m_Name: DesabamentoCaverna
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1639826628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639826627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bc03c79916759e48ab5fb0cfe5142ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DesabamentoCaverna
+  segundosParaComecar: 30
+  tremorMaximo: 0.25
+  frequencia: 18
+  inclinacaoMaxima: 0.8
+  sacudidas: 1
+  poeiraPorSegundo: 40
+  pedrasPorSegundo: 10
+  corPoeira: {r: 0.72, g: 0.58, b: 0.42, a: 0.55}
+  corPedras: {r: 0.32, g: 0.22, b: 0.15, a: 1}
+--- !u!4 &1639826629
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639826627}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -149.6484, y: 0, z: -20.87356}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1653139302
 GameObject:
   m_ObjectHideFlags: 0
@@ -4071,3 +4124,4 @@ SceneRoots:
   - {fileID: 390506721}
   - {fileID: 1341854667}
   - {fileID: 1552731056}
+  - {fileID: 1639826629}

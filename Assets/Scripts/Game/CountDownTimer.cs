@@ -19,6 +19,9 @@ public class CountdownTimer : MonoBehaviour
     private static bool iniciado;
     private static bool desativado;    // Controla se o timer deve estar ligado ou desligado no jogo
     private bool timerRunning;
+    public static float TempoRestante => tempoRestante;
+    public static bool Iniciado => iniciado;
+    public static bool Desativado => desativado;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void ResetarAoIniciar()
