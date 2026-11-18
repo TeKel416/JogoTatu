@@ -72,6 +72,13 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        // Busca o Animator automaticamente nos filhos caso você esqueça de arrastar no Inspector
+        if (animator == null)
+        {
+            animator = GetComponentInChildren<Animator>();
+        }
+
         AtualizarVisual();
     }
 
@@ -82,6 +89,14 @@ public class PlayerController : MonoBehaviour
            Vector3.down,
            floorDistance,
            floorLayer);
+
+        // --- CONTROLE DA ANIMAÇÃO DE ANDAR ---
+        if (animator != null)
+        {
+            float entradaMovimento = Input.GetAxisRaw("Horizontal");
+            bool estaAndando = Mathf.Abs(entradaMovimento) > 0.1f && Isfloor && !isManualBall && !IsStomp;
+            animator.SetBool("isWalking", estaAndando);
+        }
 
         // --- ALTERNAR MODO BOLINHA (TECLA F) ---
         if (Input.GetKeyDown(KeyCode.F) && Isfloor && !IsStomp)
@@ -182,7 +197,6 @@ public class PlayerController : MonoBehaviour
             // Se a velocidade do impacto foi maior ou igual ao limite definido
             if (impactoHorizontal >= velocidadeMinimaParaQuebrarParede)
             {
-                
                 Destroy(collision.gameObject);
                 SoundManager.Instance.PlaySound3D("Break", transform.position);
 
@@ -194,6 +208,11 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
+        if (animator != null)
+        {
+            animator.SetTrigger("jump");
+        }
+
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         SoundManager.Instance.PlaySound3D("Jump", transform.position);
@@ -238,10 +257,6 @@ public class PlayerController : MonoBehaviour
         if (normalModel != null) normalModel.SetActive(!viradoBolinha);
         if (ballModel != null) ballModel.SetActive(viradoBolinha);
 
-        if (animator != null)
-        {
-            animator.SetBool("IsBall", viradoBolinha);
-        }
         rb.freezeRotation = !viradoBolinha;
         if (!viradoBolinha) rb.rotation = Quaternion.Euler(Vector3.zero);
     }
@@ -256,11 +271,11 @@ public class PlayerController : MonoBehaviour
             tamanhoCaixa * 0.5f,
             Quaternion.identity,
             camadaQuebravel
-            );
+        );
 
-        foreach (Collider colisor in objetosAtingidos)
+        foreach (var obj in objetosAtingidos)
         {
-            Debug.Log(colisor.gameObject.tag);
+            Destroy(obj.gameObject);
         }
     }
 }
