@@ -3939,6 +3939,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4107900655109787861, guid: c999a1ea742d1d24ca8ab9723a3d4911, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 3.121582
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107900655109787861, guid: c999a1ea742d1d24ca8ab9723a3d4911, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1.8738403
+      objectReference: {fileID: 0}
     - target: {fileID: 4854098083515938700, guid: c999a1ea742d1d24ca8ab9723a3d4911, type: 3}
       propertyPath: startTime
       value: 180
@@ -7127,6 +7135,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3059778174332794627, guid: d36a3ad0dabdce7489c05d34515d2aad, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 6730edce7dc88144398892bbbc67dc17, type: 2}
     - target: {fileID: 3859307376297860304, guid: d36a3ad0dabdce7489c05d34515d2aad, type: 3}
       propertyPath: m_LocalPosition.x
       value: 73.1

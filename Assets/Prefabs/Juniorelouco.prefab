@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6515520469423206346}
   - component: {fileID: 8300689360123115191}
   m_Layer: 0
-  m_Name: PlayerTatu 1
+  m_Name: Juniorelouco
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
