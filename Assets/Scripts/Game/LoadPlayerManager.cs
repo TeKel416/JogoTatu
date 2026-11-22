@@ -7,7 +7,7 @@ public class LoadPlayerManager : MonoBehaviour
     public Transform levelSpawn;
     public CinemachineCamera cineCamera;
     private GameObject player;
-    
+
     void Awake()
     {
         player = FindPlayer();
@@ -17,7 +17,6 @@ public class LoadPlayerManager : MonoBehaviour
     GameObject FindPlayer()
     {
         player = GameObject.Find("PlayerTatu");
-        Debug.Log(player);
         return player;
     }
 
@@ -25,19 +24,41 @@ public class LoadPlayerManager : MonoBehaviour
     {
         yield return null;
 
-        Debug.Log("old player: " + player.transform.position);
-        player.transform.position = levelSpawn.position;
-        Debug.Log("new player: " + player.transform.position);
+        if (levelSpawn != null)
+        {
+            player.transform.position = levelSpawn.position;
+        }
+
+        // Faz o vagalume encontrar o tatu e aparecer junto dele no checkpoint
+        Vagalume vagalume = FindFirstObjectByType<Vagalume>();
+        if (vagalume != null)
+        {
+            vagalume.TeletransportarParaAlvo(player.transform);
+        }
 
         yield return null;
 
-        cineCamera.Target.TrackingTarget = player.transform.Find("TrackingTarget");
-        player.GetComponent<Rigidbody>().isKinematic = false;
+        if (cineCamera != null)
+        {
+            cineCamera.Target.TrackingTarget = player.transform.Find("TrackingTarget");
+        }
+
+        if (player.TryGetComponent(out Rigidbody rb))
+        {
+            rb.isKinematic = false;
+        }
+
+        if (player.TryGetComponent(out PlayerHealth health))
+        {
+            health.RestaurarVidaCompleta();
+        }
 
         yield return null;
 
-        player.GetComponent<PlayerController>().enabled = true;
-
-        Debug.Log("final player: " + player.transform.position);
+        if (player.TryGetComponent(out PlayerController controller))
+        {
+            controller.enabled = true;
+            controller.Renascer();
+        }
     }
 }

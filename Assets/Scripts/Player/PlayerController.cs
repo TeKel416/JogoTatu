@@ -57,6 +57,10 @@ public class PlayerController : MonoBehaviour
     [Header("Animator (opcional, para quando tiver animação de verdade)")]
     public Animator animator;
 
+    [Header("Renascimento")]
+    [Tooltip("Efeito de luz + som quando o tatu volta da morte. Se ficar vazio, procura no próprio tatu.")]
+    public EfeitoRenascimento efeitoRenascimento;
+
     private Rigidbody rb;
     private bool Isfloor;
     public bool IsStomp;
@@ -72,11 +76,20 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+        }
 
         // Busca o Animator automaticamente nos filhos caso você esqueça de arrastar no Inspector
         if (animator == null)
         {
             animator = GetComponentInChildren<Animator>();
+        }
+
+        if (efeitoRenascimento == null)
+        {
+            efeitoRenascimento = GetComponent<EfeitoRenascimento>();
         }
 
         AtualizarVisual();
@@ -101,7 +114,7 @@ public class PlayerController : MonoBehaviour
         // --- ALTERNAR MODO BOLINHA (TECLA F) ---
         if (Input.GetKeyDown(KeyCode.F) && Isfloor && !IsStomp)
         {
-            SoundManager.Instance.PlaySound2D("BolinhaTatu");
+            Som2D("BolinhaTatu");
             isManualBall = !isManualBall;
             AtualizarVisual();
         }
@@ -198,7 +211,7 @@ public class PlayerController : MonoBehaviour
             if (impactoHorizontal >= velocidadeMinimaParaQuebrarParede)
             {
                 Destroy(collision.gameObject);
-                SoundManager.Instance.PlaySound3D("Break", transform.position);
+                Som3D("Break", transform.position);
 
                 // Mantém um pouco da velocidade para ele não parar estagnado ao quebrar a parede
                 rb.linearVelocity = new Vector3(velocidadeUltimoFrameX * 0.5f, rb.linearVelocity.y, 0f);
@@ -215,12 +228,12 @@ public class PlayerController : MonoBehaviour
 
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        SoundManager.Instance.PlaySound3D("Jump", transform.position);
+        Som3D("Jump", transform.position);
     }
 
     void Stomp()
     {
-        SoundManager.Instance.PlaySound2D("Stomp");
+        Som2D("Stomp");
 
         IsStomp = true;
         rb.linearVelocity = Vector3.zero;
@@ -239,43 +252,66 @@ public class PlayerController : MonoBehaviour
             if (colisor.gameObject.CompareTag("Breakable"))
             {
                 Destroy(colisor.gameObject);
-                SoundManager.Instance.PlaySound3D("Break", transform.position);
+                Som3D("Break", transform.position);
                 rb.linearVelocity = Vector3.zero;
             }
         }
 
         IsStomp = false;
         isManualBall = false;
-        CancelInvoke("AtualizarVisual");
-        Invoke("AtualizarVisual", 0.1f);
+        AtualizarVisual();
     }
 
     void AtualizarVisual()
     {
-        bool viradoBolinha = IsStomp || isManualBall;
+        bool mostrarBola = IsStomp || isManualBall;
 
-        if (normalModel != null) normalModel.SetActive(!viradoBolinha);
-        if (ballModel != null) ballModel.SetActive(viradoBolinha);
+        if (normalModel != null)
+            normalModel.SetActive(!mostrarBola);
 
-        rb.freezeRotation = !viradoBolinha;
-        if (!viradoBolinha) rb.rotation = Quaternion.Euler(Vector3.zero);
+        if (ballModel != null)
+            ballModel.SetActive(mostrarBola);
     }
 
-    void BreakForce()
+    public void Renascer()
     {
-        Vector3 tamanhoCaixa = new Vector3(1f, 0.3f, 1f);
-        Vector3 centroCaixa = transform.position + Vector3.down * 0.5f;
+        gameObject.SetActive(true);
+        IsStomp = false;
+        isManualBall = false;
 
-        Collider[] objetosAtingidos = Physics.OverlapBox(
-            centroCaixa,
-            tamanhoCaixa * 0.5f,
-            Quaternion.identity,
-            camadaQuebravel
-        );
-
-        foreach (var obj in objetosAtingidos)
+        if (rb != null)
         {
-            Destroy(obj.gameObject);
+            rb.isKinematic = false;
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+
+        AtualizarVisual();
+
+        if (efeitoRenascimento == null)
+        {
+            efeitoRenascimento = GetComponent<EfeitoRenascimento>();
+        }
+
+        if (efeitoRenascimento != null)
+        {
+            efeitoRenascimento.Tocar();
+        }
+    }
+
+    void Som2D(string nome)
+    {
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySound2D(nome);
+        }
+    }
+
+    void Som3D(string nome, Vector3 pos)
+    {
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySound3D(nome, pos);
         }
     }
 }

@@ -7232,7 +7232,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerTatu
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8530150322306641071, guid: d36a3ad0dabdce7489c05d34515d2aad, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

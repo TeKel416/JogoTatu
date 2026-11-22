@@ -159,6 +159,7 @@ GameObject:
   - component: {fileID: 2136701020339938630}
   - component: {fileID: 3059778174332794627}
   - component: {fileID: 1718983643919371803}
+  - component: {fileID: 7436081317259814242}
   m_Layer: 0
   m_Name: PlayerTatu
   m_TagString: Player
@@ -322,6 +323,7 @@ MonoBehaviour:
   normalModel: {fileID: 919132149155446097, guid: dbc6a6cd073bf7447af4ef86e4d13201, type: 3}
   ballModel: {fileID: 2982115379671933607}
   animator: {fileID: 5581859121515540373}
+  efeitoRenascimento: {fileID: 0}
   IsStomp: 0
 --- !u!95 &3059778174332794627
 Animator:
@@ -359,6 +361,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   vidaMaxima: 3
   tempoInvencivel: 1.5
+--- !u!114 &7436081317259814242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4964293930314200571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ea8d5683cec4e04d90f7d597470dd89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EfeitoRenascimento
+  nomeDoSom: EspiritoDaMata
+  somReserva: {fileID: 8300000, guid: d1e9fe4ed489bc647852e10bc6b0ac6e, type: 3}
+  duracao: 5
+  tempoSubida: 1.2
+  tempoDescida: 1.4
+  corBrilho: {r: 1, g: 0.93, b: 0.55, a: 1}
+  corLuz: {r: 0.65, g: 1, b: 0.55, a: 1}
+  intensidadeLuz: 3
+  brilhosPorSegundo: 60
+  brilharModelo: 1
+  intensidadeEmissao: 1.6
+  surgirComPulinho: 1
+  deslocamento: {x: 0, y: 0, z: 0}
 --- !u!1001 &2025541099605824004
 PrefabInstance:
   m_ObjectHideFlags: 0
