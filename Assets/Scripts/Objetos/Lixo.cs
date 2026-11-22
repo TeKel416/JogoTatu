@@ -1,3 +1,4 @@
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,8 +7,20 @@ public class Lixo : MonoBehaviour
     public Transform tpVila;
     public UnityEvent pararTimer; // FUNCAO PLACEHOLDER PRO J1
 
+    private bool coletado;
+
     void OnTriggerEnter(Collider collision)
     {
+
+        if (coletado || !collision.CompareTag("Player")) return;
+        coletado = true;
+
+        // 0. Feedback visual e sonoro (antes de destruir o lixo)
+        if (ColetaUI.Instancia != null)
+            ColetaUI.Instancia.MostrarColeta("Uma peça foi coletada!");
+
+        
+
         if (collision.CompareTag("Player"))
         {
             // 1. Avisa o script do Timer para parar de rodar e sumir da tela imediatamente

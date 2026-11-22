@@ -1516,6 +1516,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4107900655109787861, guid: c999a1ea742d1d24ca8ab9723a3d4911, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 3.121582
+      objectReference: {fileID: 0}
     - target: {fileID: 7861525870643107727, guid: c999a1ea742d1d24ca8ab9723a3d4911, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -5112,6 +5116,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4107900655109787861, guid: c999a1ea742d1d24ca8ab9723a3d4911, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 3.121582
+      objectReference: {fileID: 0}
     - target: {fileID: 7861525870643107727, guid: c999a1ea742d1d24ca8ab9723a3d4911, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -7038,6 +7046,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4107900655109787861, guid: c999a1ea742d1d24ca8ab9723a3d4911, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 3.121582
+      objectReference: {fileID: 0}
     - target: {fileID: 4854098083515938700, guid: c999a1ea742d1d24ca8ab9723a3d4911, type: 3}
       propertyPath: startTime
       value: 180
@@ -7181,7 +7193,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1703125733615285279, guid: c999a1ea742d1d24ca8ab9723a3d4911, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2100633050}
   m_SourcePrefab: {fileID: 100100000, guid: c999a1ea742d1d24ca8ab9723a3d4911, type: 3}
 --- !u!1 &1404175203
 GameObject:
@@ -10307,6 +10322,26 @@ MonoBehaviour:
   materialGrama: {fileID: 0}
   limiarGrama: 0.6
   irregularidadeGrama: 0.5
+--- !u!1 &2100633049 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1703125733615285279, guid: c999a1ea742d1d24ca8ab9723a3d4911, type: 3}
+  m_PrefabInstance: {fileID: 1395510807}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2100633050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2100633049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 440569e40543ce84caac6937eb4290be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ColetaUI
+  textoAviso: {fileID: 0}
+  grupoAviso: {fileID: 0}
+  tempoVisivel: 1.5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
