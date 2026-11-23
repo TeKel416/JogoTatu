@@ -196,9 +196,9 @@ MonoBehaviour:
   - trackName: MainMenu
     clip: {fileID: 8300000, guid: fc76bca0d64d8a14d8a7aea83d4a178a, type: 3}
   - trackName: Lobby
-    clip: {fileID: 8300000, guid: 6a66a6e13226f4a4ea14b35285e6a66e, type: 3}
-  - trackName: Game
     clip: {fileID: 8300000, guid: 652918cb90060b642b34c4d367428f8e, type: 3}
+  - trackName: Game
+    clip: {fileID: 8300000, guid: 6a66a6e13226f4a4ea14b35285e6a66e, type: 3}
   musicSource: {fileID: 0}
 --- !u!114 &1049604181612958440
 MonoBehaviour:

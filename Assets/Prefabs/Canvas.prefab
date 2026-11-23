@@ -615,6 +615,7 @@ GameObject:
   - component: {fileID: 6944649679189234315}
   - component: {fileID: 9138256540374310745}
   - component: {fileID: 5995433069869202569}
+  - component: {fileID: 3208908242731011145}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Breakable
@@ -742,7 +743,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameOverManager
   painelGameOver: {fileID: 697637137326382101}
-  Lobby: Lobby
+  nomeCenaLobby: Lobby
   tempoAteVoltar: 3
 --- !u!114 &9138256540374310745
 MonoBehaviour:
@@ -771,6 +772,20 @@ MonoBehaviour:
   textoAviso: {fileID: 5099494440772447018}
   grupoAviso: {fileID: 8404746003075520895}
   tempoVisivel: 1.5
+--- !u!114 &3208908242731011145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703125733615285279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7de698702a1673e498212aebd03fdd50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EsconderPainelPorCena
+  nomeDaCena: Lobby
+  painel: {fileID: 7602588952223480274}
 --- !u!1 &2099881435338701237
 GameObject:
   m_ObjectHideFlags: 0

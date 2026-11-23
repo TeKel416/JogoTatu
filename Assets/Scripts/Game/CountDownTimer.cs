@@ -54,8 +54,9 @@ public class CountdownTimer : MonoBehaviour
 
     public static void IniciarEAtivarTimer()
     {
+        bool jaEstavaRodando = iniciado && !desativado && tempoRestante > 0f;
         desativado = false;
-        iniciado = false; // Garante que vai resetar para o startTime na nova fase
+        if (!jaEstavaRodando) iniciado = false;
 
         CountdownTimer timer = Object.FindFirstObjectByType<CountdownTimer>();
         if (timer != null)

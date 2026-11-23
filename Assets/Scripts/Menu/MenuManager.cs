@@ -67,6 +67,9 @@ public class MenuManager : MonoBehaviour
         // Garante que o jogo não fique congelado caso o menu tenha sido aberto de uma pausa
         Time.timeScale = 1f;
 
+        // Libera a cutscene para tocar uma única vez ao entrar pelo Play
+        CutsceneManager.ResetarCutscene();
+
         // Só carrega a cena (a música do Lobby vai ser chamada quando o diálogo acabar!)
         SceneManager.LoadScene(gameSceneName);
     }

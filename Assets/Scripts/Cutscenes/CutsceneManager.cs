@@ -29,6 +29,9 @@ public class CutsceneManager : MonoBehaviour
     // (ex: o personagem morreu). Só volta a false quando o jogo é fechado ou se você chamar ResetarCutscene().
     private static bool cutsceneJaTocou = false;
 
+    // Trava para garantir que a cutscene só toque se vier do Menu Play
+    private static bool permitirCutscene = false;
+
     // Permite que outros scripts consultem se a cutscene já foi vista
     public static bool JaTocou => cutsceneJaTocou;
 
@@ -37,12 +40,14 @@ public class CutsceneManager : MonoBehaviour
     private static void ResetarAoIniciar()
     {
         cutsceneJaTocou = false;
+        permitirCutscene = false;
     }
 
-    // Chame isto se quiser que a cutscene toque de novo (ex: ao começar um jogo novo pelo menu)
+    // Chame isto no botão Play do seu Menu antes de carregar a cena do Lobby!
     public static void ResetarCutscene()
     {
         cutsceneJaTocou = false;
+        permitirCutscene = true;
     }
 
     void Start()
@@ -53,14 +58,18 @@ public class CutsceneManager : MonoBehaviour
         if (jogador == null)
             jogador = FindFirstObjectByType<PlayerController>();
 
-        // Já tocou antes (ex: o personagem morreu e a cena recarregou): pula a cutscene
-        if (cutsceneJaTocou)
+        // Já tocou antes OU não veio pelo botão Play do menu: pula a cutscene
+        if (cutsceneJaTocou || !permitirCutscene)
         {
+            cutsceneJaTocou = true; // Garante que fique marcada como vista
             meuVideoPlayer.Stop();
             meuVideoPlayer.gameObject.SetActive(false);
             TocarMusicaPosCutscene();
             return;
         }
+
+        // Consome a permissão para que não toque novamente ao voltar de outras fases
+        permitirCutscene = false;
 
         // Para a música do menu enquanto a cutscene toca
         if (pararMusicaNaCutscene && MusicManager.Instance != null)
@@ -82,6 +91,7 @@ public class CutsceneManager : MonoBehaviour
 
         // Play() já prepara o vídeo sozinho se ele ainda não estiver pronto
         meuVideoPlayer.Play();
+
         StartCoroutine(RevelarQuandoVideoComecar());
     }
 
@@ -97,7 +107,6 @@ public class CutsceneManager : MonoBehaviour
     private IEnumerator RevelarQuandoVideoComecar()
     {
         float espera = 0f;
-
         while ((!meuVideoPlayer.isPlaying || meuVideoPlayer.frame < 1) && espera < 10f)
         {
             espera += Time.unscaledDeltaTime;
@@ -147,8 +156,6 @@ public class CutsceneManager : MonoBehaviour
 
         // Executa o fade do professor de forma estática
         GDavini.Fader.FadeIn(0f, tempoDoFade);
-
-
     }
 
     // Certifique-se de que ESTA função esteja selecionada no evento 'On End ()' do Fader do seu professor
@@ -171,6 +178,7 @@ public class CutsceneManager : MonoBehaviour
                 meuVideoPlayer.Stop();
                 meuVideoPlayer.gameObject.SetActive(false);
             }
+
             GDavini.Fader.FadeOut(0f, tempoDoFade);
 
             // Devolve o controle ao tatu
@@ -195,7 +203,8 @@ public class CutsceneManager : MonoBehaviour
         {
             // Zera o movimento lateral para o tatu não sair deslizando com o script desligado
             Rigidbody rb = jogador.GetComponent<Rigidbody>();
-            if (rb != null) rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
+            if (rb != null)
+                rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
         }
 
         jogador.enabled = !travar;

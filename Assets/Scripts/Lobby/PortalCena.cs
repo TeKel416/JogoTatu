@@ -88,7 +88,7 @@ public class PortalCena : MonoBehaviour
             GDavini.Fader.FadeIn(0f, tempoDoFade, true);
             yield return new WaitForSecondsRealtime(tempoDoFade);
         }
-
+        Destroy(jogador.gameObject);
         SceneManager.LoadScene(nomeDaCena);
     }
 }

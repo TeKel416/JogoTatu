@@ -335,7 +335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EfeitoRenascimento
   nomeDoSom: EspiritoDaMata
   somReserva: {fileID: 8300000, guid: d1e9fe4ed489bc647852e10bc6b0ac6e, type: 3}
-  duracao: 5
+  duracao: 2
   tempoSubida: 1.2
   tempoDescida: 1.4
   corBrilho: {r: 1, g: 0.93, b: 0.55, a: 1}
@@ -353,7 +353,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4964293930314200571}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: d0b69faa4e117484b84ac40f41fe56ac, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -368,7 +368,7 @@ CapsuleCollider:
   m_Radius: 0.4
   m_Height: 0.8
   m_Direction: 1
-  m_Center: {x: 0, y: -0.3, z: 0}
+  m_Center: {x: 0, y: -0.29, z: 0}
 --- !u!135 &1980681764441140277
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -376,7 +376,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4964293930314200571}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: d0b69faa4e117484b84ac40f41fe56ac, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -389,7 +389,7 @@ SphereCollider:
   m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.35
-  m_Center: {x: 0, y: -0.35, z: 0}
+  m_Center: {x: 0, y: -0.34, z: 0}
 --- !u!1001 &2025541099605824004
 PrefabInstance:
   m_ObjectHideFlags: 0
