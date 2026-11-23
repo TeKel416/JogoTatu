@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public Collider TatuCollider;
+    public Collider BolaCollider; 
+
     public static PlayerController Instance;
 
     private void Awake()
@@ -27,6 +30,8 @@ public class PlayerController : MonoBehaviour
     public float aceleracaoBola = 8f;
     [Tooltip("Quão difícil é virar pro lado oposto. Valores menores fazem ele 'escorregar' mais metros antes de mudar de direção.")]
     public float inerciaCurvaBola = 4f;
+    [Tooltip("Velocidade com que a bolinha gira visualmente conforme anda.")]
+    public float velocidadeGiroBola = 120f;
 
     [Header("Configurações de Quebra de Parede")]
     [Tooltip("Velocidade horizontal mínima necessária para conseguir quebrar a parede de lado.")]
@@ -135,6 +140,13 @@ public class PlayerController : MonoBehaviour
         {
             FinishStomp();
         }
+
+        // --- ROTAÇÃO VISUAL DA BOLINHA ---
+        if ((isManualBall || IsStomp) && ballModel != null && ballModel.activeInHierarchy)
+        {
+            float giro = -rb.linearVelocity.x * velocidadeGiroBola * Time.deltaTime;
+            ballModel.transform.Rotate(0f, 0f, giro, Space.World);
+        }
     }
 
     void FixedUpdate()
@@ -150,32 +162,35 @@ public class PlayerController : MonoBehaviour
         {
             float entradaMovimento = Input.GetAxisRaw("Horizontal");
 
-            float velocidadeAlvoX = 0f;
-            float taxaMudancaVelocidade = 0f;
-
             if (isManualBall)
             {
-                velocidadeAlvoX = entradaMovimento * velocidadeMaximaBola;
+                float velocidadeAlvoX = entradaMovimento * velocidadeMaximaBola;
 
-                bool mudandoDeDirecao = (entradaMovimento != 0 && Mathf.Sign(rb.linearVelocity.x) != Mathf.Sign(entradaMovimento));
+                float taxaMudancaVelocidade = aceleracaoBola;
 
-                if (mudandoDeDirecao)
+                // Inércia ao trocar de direção
+                if (entradaMovimento != 0 &&
+                    rb.linearVelocity.x != 0 &&
+                    Mathf.Sign(entradaMovimento) != Mathf.Sign(rb.linearVelocity.x))
                 {
                     taxaMudancaVelocidade = inerciaCurvaBola;
                 }
-                else
-                {
-                    taxaMudancaVelocidade = aceleracaoBola;
-                }
+
+                float novoX = Mathf.MoveTowards(
+                    rb.linearVelocity.x,
+                    velocidadeAlvoX,
+                    taxaMudancaVelocidade * Time.fixedDeltaTime
+                );
+
+                rb.linearVelocity = new Vector3(novoX, rb.linearVelocity.y, 0f);
             }
             else
             {
-                velocidadeAlvoX = entradaMovimento * velocidade;
-                taxaMudancaVelocidade = 100f;
-            }
+                // Movimento normal original
+                float velocidadeX = entradaMovimento * velocidade;
 
-            float novoX = Mathf.MoveTowards(rb.linearVelocity.x, velocidadeAlvoX, taxaMudancaVelocidade * Time.fixedDeltaTime);
-            rb.linearVelocity = new Vector3(novoX, rb.linearVelocity.y, 0f);
+                rb.linearVelocity = new Vector3(velocidadeX, rb.linearVelocity.y, 0f);
+            }
 
             // --- LÓGICA DE DIRECIONAMENTO VISUAL ---
             if (rb.linearVelocity.x > 0.1f)
@@ -266,12 +281,27 @@ public class PlayerController : MonoBehaviour
     {
         bool mostrarBola = IsStomp || isManualBall;
 
-        if (normalModel != null)
-            normalModel.SetActive(!mostrarBola);
+        rb.rotation = Quaternion.identity;
 
-        if (ballModel != null)
+        rb.constraints = mostrarBola ? 
+            RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY : 
+            RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+        
+       
+        
+            
+            normalModel.SetActive(!mostrarBola);
+            TatuCollider.enabled = !mostrarBola;
+        
+            
+
+       
+            BolaCollider.enabled = mostrarBola;
             ballModel.SetActive(mostrarBola);
+        
+          
     }
+
 
     public void Renascer()
     {

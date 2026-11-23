@@ -1,49 +1,45 @@
-using System.Globalization;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class Lixo : MonoBehaviour
 {
-    public Transform tpVila;
-    public UnityEvent pararTimer; // FUNCAO PLACEHOLDER PRO J1
+    [Header("Cena de Destino")]
+    [Tooltip("Nome exato da cena do Lobby no Build Profiles (ex: Lobby ou Vila Ubiratinga).")]
+    public string nomeCenaLobby = "Lobby";
+    public UnityEvent pararTimer;
 
     private bool coletado;
 
     void OnTriggerEnter(Collider collision)
     {
+        if (coletado) return;
 
-        if (coletado || !collision.CompareTag("Player")) return;
+        PlayerController player = collision.GetComponentInParent<PlayerController>();
+        if (player == null && !collision.CompareTag("Player")) return;
+
         coletado = true;
 
-        // 0. Feedback visual e sonoro (antes de destruir o lixo)
         if (ColetaUI.Instancia != null)
             ColetaUI.Instancia.MostrarColeta("Uma peça foi coletada!");
 
-        
+        CountdownTimer.PararEDesativarTimer();
 
-        if (collision.CompareTag("Player"))
+        if (pararTimer != null)
         {
-            // 1. Avisa o script do Timer para parar de rodar e sumir da tela imediatamente
-            CountdownTimer.PararEDesativarTimer();
+            pararTimer.Invoke();
+        }
 
-            // Invoca qualquer outro evento placeholder que você já tinha configurado
-            if (pararTimer != null)
-            {
-                pararTimer.Invoke(); // FUNCAO PLACEHOLDER PRO J1
-            }
+        LobbyRespawnManager.deveTocarAnimacaoRenascimento = true;
 
-            // 2. Desativa temporariamente o CharacterController do jogador (se houver) para o teletransporte funcionar
-            CharacterController controller = collision.gameObject.GetComponent<CharacterController>();
-            if (controller != null) controller.enabled = false;
-
-            // 3. Teletransporta o jogador para a Vila
-            collision.gameObject.transform.position = tpVila.position;
-
-            // Reativa o controller após mover
-            if (controller != null) controller.enabled = true;
-
-            // 4. Destrói o objeto do lixo por último para evitar que o código pare antes da hora
-            Destroy(gameObject);
+        if (Application.CanStreamedLevelBeLoaded(nomeCenaLobby))
+        {
+            Destroy(player.gameObject);
+            SceneManager.LoadScene(nomeCenaLobby);
+        }
+        else
+        {
+            Debug.LogError("Lixo: A cena '" + nomeCenaLobby + "' nao esta no Build Profiles!");
         }
     }
 }

@@ -6,28 +6,20 @@ public class EnemyPatrol : MonoBehaviour
 {
     public float velocidade = 2f;
 
-
     public LayerMask camadaChao;
-   
     public float distanciaParede = 0.2f;
- 
     public float distanciaBorda = 0.6f;
 
-
     public int dano = 1;
-  
     public float toleranciaPisao = 0.3f;
-
     public float forcaQuique = 10f;
-
     public float tempoParaSumir = 0.3f;
 
-  
     public Transform modelo;
 
     private Rigidbody rb;
     private Collider col;
-    private int direcao = 1; 
+    private int direcao = 1;
     private bool morto;
 
     void Awake()
@@ -39,7 +31,6 @@ public class EnemyPatrol : MonoBehaviour
 
         AtualizarVisual();
     }
-
 
     void FixedUpdate()
     {
@@ -55,17 +46,15 @@ public class EnemyPatrol : MonoBehaviour
 
     bool DeveVirar()
     {
-        Bounds caixa = col.bounds; 
+        Bounds caixa = col.bounds;
         Vector3 frente = Vector3.right * direcao;
 
-       
         float distParede = caixa.extents.x + distanciaParede;
         if (Physics.Raycast(caixa.center, frente, distParede, camadaChao, QueryTriggerInteraction.Ignore))
         {
             return true;
         }
 
-     
         Vector3 origemBorda = new Vector3(
             caixa.center.x + direcao * (caixa.extents.x + 0.1f),
             caixa.min.y + 0.1f,
@@ -101,7 +90,6 @@ public class EnemyPatrol : MonoBehaviour
     {
         if (morto) return;
 
-     
         PlayerHealth vida = collision.collider.GetComponentInParent<PlayerHealth>();
         if (vida == null) return;
 
@@ -117,11 +105,17 @@ public class EnemyPatrol : MonoBehaviour
         else if (jogadorEmCima)
         {
             QuicarJogador(collision);
-            Die(); 
+            Die();
         }
         else
         {
             vida.TakeDamage(dano);
+
+            if (vida.EstaMorto)
+            {
+                Destroy(jogador.gameObject);
+                LobbyRespawnManager.deveTocarAnimacaoRenascimento = true;
+            }
         }
     }
 
@@ -139,11 +133,14 @@ public class EnemyPatrol : MonoBehaviour
         if (morto) return;
         morto = true;
 
-        SoundManager.Instance.PlaySound2D("MorteInimigo");
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySound2D("MorteInimigo");
+        }
 
         rb.linearVelocity = Vector3.zero;
-        rb.isKinematic = true;  
-        col.enabled = false;    
+        rb.isKinematic = true;
+        col.enabled = false;
         Destroy(gameObject, tempoParaSumir);
     }
 }
