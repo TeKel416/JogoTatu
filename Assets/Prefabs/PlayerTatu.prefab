@@ -97,7 +97,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bad4fd684dec985438558a65a8816e49, type: 2}
+  - {fileID: 2100000, guid: c4ca8d5fdedb5054798121a3ac612727, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -197,7 +197,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bad4fd684dec985438558a65a8816e49, type: 2}
+  - {fileID: 2100000, guid: d681cd68b293a5c4fa771c68b1536d99, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -453,11 +453,11 @@ PrefabInstance:
     - target: {fileID: -7502997934251465095, guid: dbc6a6cd073bf7447af4ef86e4d13201, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: bad4fd684dec985438558a65a8816e49, type: 2}
+      objectReference: {fileID: 2100000, guid: d681cd68b293a5c4fa771c68b1536d99, type: 2}
     - target: {fileID: -1750197354950549132, guid: dbc6a6cd073bf7447af4ef86e4d13201, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: bad4fd684dec985438558a65a8816e49, type: 2}
+      objectReference: {fileID: 2100000, guid: 9cb82d528dbd5b844a86b2c22dc6b32c, type: 2}
     - target: {fileID: 919132149155446097, guid: dbc6a6cd073bf7447af4ef86e4d13201, type: 3}
       propertyPath: m_Name
       value: Tati-rigged
@@ -477,6 +477,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: -4174191405776262151, guid: dbc6a6cd073bf7447af4ef86e4d13201, type: 3}
+    - {fileID: 824083000988067331, guid: dbc6a6cd073bf7447af4ef86e4d13201, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbc6a6cd073bf7447af4ef86e4d13201, type: 3}

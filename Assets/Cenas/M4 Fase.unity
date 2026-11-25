@@ -904,7 +904,7 @@ MonoBehaviour:
   velocidadeBalanco: 2
   luz: {fileID: 767158123}
   visual: {fileID: 1590096287}
-  intensidadeLigada: 3
+  intensidadeLigada: 1
   tempoFade: 0.5
   ligadoAoIniciar: 1
 --- !u!4 &219411128
